@@ -1,0 +1,233 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  schemas  = ["ecommerce"]
+}
+
+// ============================================
+// ENUMS
+// ============================================
+
+enum Role {
+  CUSTOMER
+  ADMIN
+
+  @@schema("ecommerce")
+}
+
+enum OrderStatus {
+  CREATED
+  PAID
+  SHIPPED
+  DELIVERED
+  REFUNDED
+
+  @@schema("ecommerce")
+}
+
+// ============================================
+// MODELS
+// ============================================
+
+model User {
+  id            String   @id @default(uuid())
+  email         String   @unique
+  name          String?
+  passwordHash  String
+  role          Role     @default(CUSTOMER)
+  isActive          Boolean  @default(true)
+  emailVerified     Boolean  @default(false)
+  verificationToken String?
+  verificationTokenExpiry DateTime?
+  createdAt         DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  // Relations
+  orders        Order[]
+  reviews       Review[]
+  auditLogs     AuditLog[]
+  refreshTokens RefreshToken[]
+  cartItems     CartItem[]
+
+  @@map("users")
+  @@schema("ecommerce")
+}
+
+model RefreshToken {
+  id        String   @id @default(uuid())
+  token     String   @unique
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  isRevoked Boolean  @default(false)
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+  @@map("refresh_tokens")
+  @@schema("ecommerce")
+}
+
+model DailySalesSnapshot {
+  id           String   @id @default(uuid())
+  date         DateTime @unique
+  totalRevenue Decimal  @db.Decimal(10, 2)
+  totalOrders  Int
+  newUsers     Int
+  createdAt    DateTime @default(now())
+
+  @@map("daily_sales_snapshots")
+  @@schema("ecommerce")
+}
+
+model Category {
+  id        String   @id @default(uuid())
+  name      String
+  slug      String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  products Product[]
+
+  @@map("categories")
+  @@schema("ecommerce")
+}
+
+model Product {
+  id          String   @id @default(uuid())
+  name        String
+  description String?
+  price       Decimal  @db.Decimal(10, 2)
+  sku         String   @unique
+  stock       Int      @default(0)
+  isActive    Boolean  @default(true)
+  avgRating   Float    @default(0)
+  numReviews  Int      @default(0)
+  image        String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  categoryId String
+  category   Category @relation(fields: [categoryId], references: [id])
+  orderItems OrderItem[]
+  reviews    Review[]
+  cartItems  CartItem[]
+
+  // Indexes for fast search
+  @@index([name])
+  @@index([sku])
+  @@index([categoryId])
+  @@map("products")
+  @@schema("ecommerce")
+}
+
+model Order {
+  id              String      @id @default(uuid())
+  status          OrderStatus @default(CREATED)
+  subtotal        Decimal     @db.Decimal(10, 2)
+  tax             Decimal     @db.Decimal(10, 2)
+  total           Decimal     @db.Decimal(10, 2)
+  paymentIntentId String?
+  
+  // Shipping Details
+  shippingName    String?
+  shippingPhone   String?
+  shippingAddress String?
+  shippingCity    String?
+  shippingZip     String?
+  
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+
+  // Relations
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  items  OrderItem[]
+
+  @@index([userId])
+  @@index([status])
+  @@map("orders")
+  @@schema("ecommerce")
+}
+
+model OrderItem {
+  id              String  @id @default(uuid())
+  quantity        Int
+  priceAtPurchase Decimal @db.Decimal(10, 2)
+
+  // Relations
+  orderId   String
+  order     Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  productId String
+  product   Product @relation(fields: [productId], references: [id])
+
+  @@index([orderId])
+  @@index([productId])
+  @@map("order_items")
+  @@schema("ecommerce")
+}
+
+model Review {
+  id        String   @id @default(uuid())
+  rating    Int
+  comment   String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  userId    String
+  user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  productId String
+  product   Product @relation(fields: [productId], references: [id])
+
+  // Unique constraint: one review per user per product
+  @@unique([userId, productId])
+  @@index([productId])
+  @@map("reviews")
+  @@schema("ecommerce")
+}
+
+model AuditLog {
+  id        String   @id @default(uuid())
+  action    String
+  entity    String
+  entityId  String
+  metadata  Json?
+  createdAt DateTime @default(now())
+
+  // Relations
+  adminId String
+  admin   User   @relation(fields: [adminId], references: [id], onDelete: Cascade)
+
+  @@index([adminId])
+  @@index([entity, entityId])
+  @@map("audit_logs")
+  @@schema("ecommerce")
+}
+
+model CartItem {
+  id       String @id @default(uuid())
+  quantity Int    @default(1)
+
+  // Relations
+  userId    String
+  user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  productId String
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([userId, productId])
+  @@index([userId])
+  @@map("cart_items")
+  @@schema("ecommerce")
+}
+

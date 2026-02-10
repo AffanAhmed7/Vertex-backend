@@ -1,0 +1,35 @@
+<mjml>
+  <mj-body background-color="#f4f4f4">
+    <mj-section background-color="#ffffff" padding-bottom="0px" padding-top="0px">
+      <mj-column width="100%">
+        <mj-text align="center" font-size="24px" font-weight="bold" color="#333" padding-top="30px">
+          Verify Your Email
+        </mj-text>
+        <mj-divider border-color="#eee" border-width="1px" />
+      </mj-column>
+    </mj-section>
+    <mj-section background-color="#ffffff" padding-top="0px">
+      <mj-column width="100%">
+        <mj-text font-size="16px" color="#555">
+          Welcome to our store, {{name}}!
+        </mj-text>
+        <mj-text font-size="16px" color="#555">
+          Please click the button below to verify your email address and active your account.
+        </mj-text>
+        <mj-button background-color="#28a745" color="#FFFFFF" href="{{verificationUrl}}" padding-top="30px">
+          Verify Email
+        </mj-button>
+        <mj-text font-size="14px" color="#888" padding-top="40px">
+          If you didn't create an account, you can safely ignore this email.
+        </mj-text>
+      </mj-column>
+    </mj-section>
+    <mj-section padding-top="20px">
+      <mj-column width="100%">
+        <mj-text align="center" color="#999" font-size="12px">
+          &copy; 2026 E-Commerce Store. All rights reserved.
+        </mj-text>
+      </mj-column>
+    </mj-section>
+  </mj-body>
+</mjml>
