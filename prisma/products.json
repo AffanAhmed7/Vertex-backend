@@ -1,0 +1,1478 @@
+[
+  {
+    "id": "1",
+    "name": "iPhone 15 Pro Max",
+    "description": "Titanium design with A17 Pro chip, 48MP camera system, and all-day battery life. The most powerful iPhone ever.",
+    "price": 1199,
+    "rating": 4.9,
+    "category": "Electronics",
+    "image": "https://images.unsplash.com/photo-1592750475338-74b7b21085ab?auto=format&fit=crop&q=80&w=800",
+    "images": [
+      "https://images.unsplash.com/photo-1592750475338-74b7b21085ab?auto=format&fit=crop&q=80&w=800"
+    ],
+    "isAvailable": true,
+    "variants": [
+      {
+        "type": "storage",
+        "label": "Storage",
+        "options": [
+          "256GB",
+          "512GB",
+          "1TB"
+        ]
+      },
+      {
+        "type": "color",
+        "label": "Color",
+        "options": [
+          "Natural Titanium",
+          "Blue Titanium",
+          "White Titanium",
+          "Black Titanium"
+        ]
+      }
+    ],
+    "specs": [
+      {
+        "label": "Display",
+        "value": "6.7\" Super Retina XDR"
+      },
+      {
+        "label": "Chip",
+        "value": "A17 Pro"
+      },
+      {
+        "label": "Camera",
+        "value": "48MP Main + 12MP Ultra Wide"
+      },
+      {
+        "label": "Battery",
+        "value": "Up to 29hr video playback"
+      }
+    ]
+  },
+  {
+    "id": "2",
+    "name": "Sony WH-1000XM5 Headphones",
+    "description": "Industry-leading noise cancellation with exceptional sound quality. 30-hour battery life and ultra-comfortable design.",
+    "price": 349,
+    "rating": 4.8,
+    "category": "Electronics",
+    "image": "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&q=80&w=800",
+    "images": [
+      "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&q=80&w=800"
+    ],
+    "isAvailable": true,
+    "variants": [
+      {
+        "type": "color",
+        "label": "Color",
+        "options": [
+          "Black",
+          "Silver",
+          "Midnight Blue"
+        ]
+      }
+    ],
+    "specs": [
+      {
+        "label": "Driver",
+        "value": "30mm"
+      },
+      {
+        "label": "Battery",
+        "value": "30 hours"
+      },
+      {
+        "label": "Noise Cancelling",
+        "value": "Yes (Auto NC Optimizer)"
+      },
+      {
+        "label": "Weight",
+        "value": "250g"
+      }
+    ]
+  },
+  {
+    "id": "3",
+    "name": "MacBook Air M3",
+    "description": "Supercharged by M3 chip. Strikingly thin design, up to 18 hours of battery life, and a stunning Liquid Retina display.",
+    "price": 1099,
+    "rating": 4.9,
+    "category": "Electronics",
+    "image": "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&q=80&w=800",
+    "images": [
+      "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&q=80&w=800"
+    ],
+    "isAvailable": true,
+    "variants": [
+      {
+        "type": "storage",
+        "label": "Configuration",
+        "options": [
+          "8GB/256GB",
+          "8GB/512GB",
+          "16GB/512GB",
+          "24GB/1TB"
+        ]
+      },
+      {
+        "type": "color",
+        "label": "Color",
+        "options": [
+          "Midnight",
+          "Starlight",
+          "Space Gray",
+          "Silver"
+        ]
+      }
+    ],
+    "specs": [
+      {
+        "label": "Display",
+        "value": "13.6\" Liquid Retina"
+      },
+      {
+        "label": "Chip",
+        "value": "Apple M3"
+      },
+      {
+        "label": "Battery",
+        "value": "Up to 18 hours"
+      },
+      {
+        "label": "Weight",
+        "value": "1.24 kg"
+      }
+    ]
+  },
+  {
+    "id": "4",
+    "name": "iPad Pro 12.9\"",
+    "description": "The ultimate iPad experience with M2 chip, Liquid Retina XDR display, and Apple Pencil hover support.",
+    "price": 1099,
+    "rating": 4.7,
+    "category": "Electronics",
+    "image": "https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?auto=format&fit=crop&q=80&w=800",
+    "images": [
+      "https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?auto=format&fit=crop&q=80&w=800"
+    ],
+    "isAvailable": true,
+    "variants": [
+      {
+        "type": "storage",
+        "label": "Storage",
+        "options": [
+          "128GB",
+          "256GB",
+          "512GB",
+          "1TB"
+        ]
+      },
+      {
+        "type": "color",
+        "label": "Color",
+        "options": [
+          "Space Gray",
+          "Silver"
+        ]
+      }
+    ],
+    "specs": [
+      {
+        "label": "Display",
+        "value": "12.9\" Liquid Retina XDR"
+      },
+      {
+        "label": "Chip",
+        "value": "Apple M2"
+      },
+      {
+        "label": "Camera",
+        "value": "12MP Wide + 10MP Ultra Wide"
+      },
+      {
+        "label": "Connectivity",
+        "value": "Wi-Fi 6E + 5G (optional)"
+      }
+    ]
+  },
+  {
+    "id": "5",
+    "name": "Samsung Galaxy Watch 6",
+    "description": "Advanced health monitoring with BioActive Sensor, sapphire crystal glass, and seamless Galaxy ecosystem integration.",
+    "price": 329,
+    "rating": 4.5,
+    "category": "Electronics",
+    "image": "https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&q=80&w=800",
+    "images": [
+      "https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&q=80&w=800"
+    ],
+    "isAvailable": true,
+    "variants": [
+      {
+        "type": "color",
+        "label": "Color",
+        "options": [
+          "Graphite",
+          "Gold",
+          "Silver"
+        ]
+      }
+    ],
+    "specs": [
+      {
+        "label": "Display",
+        "value": "1.5\" Super AMOLED"
+      },
+      {
+        "label": "Battery",
+        "value": "Up to 40 hours"
+      },
+      {
+        "label": "Water Resistance",
+        "value": "5ATM + IP68"
+      },
+      {
+        "label": "OS",
+        "value": "Wear OS 4"
+      }
+    ]
+  },
+  {
+    "id": "6",
+    "name": "Bose SoundLink Flex Speaker",
+    "description": "Portable Bluetooth speaker with deep, clear sound. Waterproof, dustproof, and built to resist corrosion.",
+    "price": 149,
+    "rating": 4.6,
+    "category": "Electronics",
+    "image": "https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?auto=format&fit=crop&q=80&w=800",
+    "images": [
+      "https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?auto=format&fit=crop&q=80&w=800"
+    ],
+    "isAvailable": true,
+    "variants": [
+      {
+        "type": "color",
+        "label": "Color",
+        "options": [
+          "Black",
+          "White Smoke",
+          "Stone Blue",
+          "Carmine Red"
+        ]
+      }
+    ],
+    "specs": [
+      {
+        "label": "Battery",
+        "value": "Up to 12 hours"
+      },
+      {
+        "label": "Water Resistance",
+        "value": "IP67"
+      },
+      {
+        "label": "Connectivity",
+        "value": "Bluetooth 5.1"
+      },
+      {
+        "label": "Weight",
+        "value": "590g"
+      }
+    ]
+  },
+  {
+    "id": "7",
+    "name": "Vertex Cinematic 49\" Curved OLED",
+    "description": "Redefine your field of view with the Vertex Cinematic 49. Featuring a massive 32:9 ultra-wide curved OLED panel with a 240Hz refresh rate and 0.03ms response time. Perfect for immersive gaming, professional color-accurate editing, and multi-window productivity. The sleek titanium-alloy stand and customizable ambient lighting sync perfectly with your environment.",
+    "price": 1499,
+    "rating": 4.9,
+    "category": "Electronics",
+    "image": "https://images.unsplash.com/photo-1593642632823-8f785ba67e45?auto=format&fit=crop&q=80&w=800",
+    "images": [
+      "https://images.unsplash.com/photo-1593642632823-8f785ba67e45?auto=format&fit=crop&q=80&w=800",
+      "https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&q=80&w=800"
+    ],
+    "isAvailable": true,
+    "variants": [
+      {
+        "type": "size",
+        "label": "Display Size",
+        "options": [
+          "49\" Curved OLED",
+          "57\" Dual-UHD Pro"
+        ]
+      },
+      {
+        "type": "color",
+        "label": "Finish",
+        "options": [
+          "Titanium Silver",
+          "Obsidian Black"
+        ]
+      }
+    ],
+    "specs": [
+      {
+        "label": "Resolution",
+        "value": "5120 x 1440 (Dual QHD)"
+      },
+      {
+        "label": "Refresh Rate",
+        "value": "240Hz / 0.03ms GtG"
+      },
+      {
+        "label": "Panel",
+        "value": "Quantum Dot OLED / 1800R"
+      },
+      {
+        "label": "Color Gamut",
+        "value": "99.3% DCI-P3"
+      },
+      {
+        "label": "Ports",
+        "value": "2x HDMI 2.1, 1x DP 1.4, USB-C 90W"
+      }
+    ]
+  },
+  {
+    "id": "8",
+    "name": "Logitech MX Master 3S Mouse",
+    "description": "Advanced wireless mouse with MagSpeed scroll, ergonomic design, and quiet clicks. Works on any surface.",
+    "price": 99,
+    "rating": 4.8,
+    "category": "Electronics",
+    "image": "https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?auto=format&fit=crop&q=80&w=800",
+    "images": [
+      "https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?auto=format&fit=crop&q=80&w=800"
+    ],
+    "isAvailable": true,
+    "variants": [
+      {
+        "type": "color",
+        "label": "Color",
+        "options": [
+          "Graphite",
+          "Pale Gray"
+        ]
+      }
+    ],
+    "specs": [
+      {
+        "label": "Sensor",
+        "value": "8000 DPI"
+      },
+      {
+        "label": "Battery",
+        "value": "70 days (full charge)"
+      },
+      {
+        "label": "Connectivity",
+        "value": "Bluetooth + USB-C"
+      },
+      {
+        "label": "Weight",
+        "value": "141g"
+      }
+    ]
+  },
+  {
+    "id": "9",
+    "name": "Classic White Oxford Shirt",
+    "description": "Premium 100% cotton Oxford shirt with a tailored fit. A wardrobe essential for any professional setting.",
+    "price": 89,
+    "rating": 4.6,
+    "category": "Apparel",
+    "image": "https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?auto=format&fit=crop&q=80&w=800",
+    "images": [
+      "https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?auto=format&fit=crop&q=80&w=800"
+    ],
+    "isAvailable": true,
+    "variants": [
+      {
+        "type": "size",
+        "label": "Size",
+        "options": [
+          "S",
+          "M",
+          "L",
+          "XL",
+          "XXL"
+        ]
+      },
+      {
+        "type": "color",
+        "label": "Color",
+        "options": [
+          "White",
+          "Light Blue",
+          "Pink"
+        ]
+      }
+    ],
+    "specs": [
+      {
+        "label": "Material",
+        "value": "100% Premium Cotton"
+      },
+      {
+        "label": "Fit",
+        "value": "Tailored"
+      },
+      {
+        "label": "Care",
+        "value": "Machine Washable"
+      },
+      {
+        "label": "Collar",
+        "value": "Button-Down"
+      }
+    ]
+  },
+  {
+    "id": "10",
+    "name": "Slim Fit Chino Pants",
+    "description": "Versatile stretch chinos with a modern slim fit. Perfect for office or weekend wear with a clean finish.",
+    "price": 65,
+    "rating": 4.5,
+    "category": "Apparel",
+    "image": "https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?auto=format&fit=crop&q=80&w=800",
+    "images": [
+      "https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?auto=format&fit=crop&q=80&w=800"
+    ],
+    "isAvailable": true,
+    "variants": [
+      {
+        "type": "size",
+        "label": "Size",
+        "options": [
+          "28",
+          "30",
+          "32",
+          "34",
+          "36"
+        ]
+      },
+      {
+        "type": "color",
+        "label": "Color",
+        "options": [
+          "Khaki",
+          "Navy",
+          "Black",
+          "Olive"
+        ]
+      }
+    ],
+    "specs": [
+      {
+        "label": "Material",
+        "value": "98% Cotton, 2% Elastane"
+      },
+      {
+        "label": "Fit",
+        "value": "Slim"
+      },
+      {
+        "label": "Care",
+        "value": "Machine Washable"
+      },
+      {
+        "label": "Rise",
+        "value": "Mid-Rise"
+      }
+    ]
+  },
+  {
+    "id": "11",
+    "name": "Merino Wool Crewneck Sweater",
+    "description": "Ultra-soft, sustainably sourced merino wool sweater with temperature-regulating properties. This lightweight yet warm knit features a timeless crewneck silhouette, ribbed cuffs, and a premium finish that resists pilling. Ideal for sophisticated layering or as a standout solo piece in any refined wardrobe.",
+    "price": 145,
+    "rating": 4.8,
+    "category": "Apparel",
+    "image": "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?auto=format&fit=crop&q=80&w=800",
+    "images": [
+      "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?auto=format&fit=crop&q=80&w=800",
+      "https://images.unsplash.com/photo-1610812382601-08104860b719?auto=format&fit=crop&q=80&w=800"
+    ],
+    "isAvailable": true,
+    "variants": [
+      {
+        "type": "size",
+        "label": "Size",
+        "options": [
+          "S",
+          "M",
+          "L",
+          "XL",
+          "XXL"
+        ]
+      },
+      {
+        "type": "color",
+        "label": "Color",
+        "options": [
+          "Charcoal",
+          "Navy",
+          "Burgundy",
+          "Forest Green",
+          "Camel"
+        ]
+      }
+    ],
+    "specs": [
+      {
+        "label": "Material",
+        "value": "100% Extra-Fine Merino Wool"
+      },
+      {
+        "label": "Knit Type",
+        "value": "12-Gauge Fine Knit"
+      },
+      {
+        "label": "Origin",
+        "value": "Ethically Sourced (Australia)"
+      },
+      {
+        "label": "Care",
+        "value": "Hand Wash Cold / Dry Flat"
+      },
+      {
+        "label": "Fit",
+        "value": "Regular / Modern Silhouette"
+      }
+    ]
+  },
+  {
+    "id": "12",
+    "name": "Running Sneakers Pro",
+    "description": "Elite performance running shoes engineered with responsive kinetic cushioning and a dual-density midsole. The breathable hyper-mesh upper provides dynamic support, while the high-traction rubber outsole ensures stability on various terrains. Designed for marathon-distance comfort and everyday agility.",
+    "price": 160,
+    "rating": 4.9,
+    "category": "Apparel",
+    "image": "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&q=80&w=800",
+    "images": [
+      "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&q=80&w=800",
+      "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?auto=format&fit=crop&q=80&w=800"
+    ],
+    "isAvailable": true,
+    "variants": [
+      {
+        "type": "size",
+        "label": "Size (US)",
+        "options": [
+          "7",
+          "8",
+          "9",
+          "10",
+          "11",
+          "12",
+          "13"
+        ]
+      },
+      {
+        "type": "color",
+        "label": "Color",
+        "options": [
+          "Electric Red",
+          "Phantom Black",
+          "Cyber Blue"
+        ]
+      }
+    ],
+    "specs": [
+      {
+        "label": "Cushioning",
+        "value": "Kinetic Foam Technology"
+      },
+      {
+        "label": "Upper",
+        "value": "Engineered Hyper-Mesh"
+      },
+      {
+        "label": "Outsole",
+        "value": "High-Traction Carbon Rubber"
+      },
+      {
+        "label": "Arch Support",
+        "value": "Neutral to Stability"
+      },
+      {
+        "label": "Weight",
+        "value": "275g (US Size 9)"
+      }
+    ]
+  },
+  {
+    "id": "13",
+    "name": "Waterproof Winter Parka",
+    "description": "A heavy-duty alpine-grade parka built for extreme cold. Featuring a DWR-treated waterproof shell and 800-fill power responsible down insulation. The adjustable snorkel hood and fleece-lined pockets provide ultimate protection against wind and snow, making it the perfect companion for harsh urban or wilderness winters.",
+    "price": 395,
+    "rating": 4.9,
+    "category": "Apparel",
+    "image": "https://images.unsplash.com/photo-1551028719-00167b16eac5?auto=format&fit=crop&q=80&w=800",
+    "images": [
+      "https://images.unsplash.com/photo-1551028719-00167b16eac5?auto=format&fit=crop&q=80&w=800",
+      "https://images.unsplash.com/photo-1545591938-e436f58246ca?auto=format&fit=crop&q=80&w=800"
+    ],
+    "isAvailable": true,
+    "variants": [
+      {
+        "type": "size",
+        "label": "Size",
+        "options": [
+          "S",
+          "M",
+          "L",
+          "XL",
+          "XXL"
+        ]
+      },
+      {
+        "type": "color",
+        "label": "Color",
+        "options": [
+          "Onyx Black",
+          "Arctic Navy",
+          "Saffron",
+          "Sage"
+        ]
+      }
+    ],
+    "specs": [
+      {
+        "label": "Shell",
+        "value": "3-Layer Ripstop Nylon"
+      },
+      {
+        "label": "Insulation",
+        "value": "800-Fill Power Goose Down"
+      },
+      {
+        "label": "Waterproof Rating",
+        "value": "20,000mm Hydrostatic Head"
+      },
+      {
+        "label": "Closure",
+        "value": "YKK AquaGuard Zippers"
+      },
+      {
+        "label": "Interior",
+        "value": "Recycled Polyester Taffeta"
+      }
+    ]
+  },
+  {
+    "id": "14",
+    "name": "Premium French Terry Joggers",
+    "description": "Luxury loungewear crafted from 450gsm heavyweight French terry cotton. Featuring a tailored tapered fit, bartacked stress points, and reinforced metal aglets. These joggers offer a structured aesthetic with the absolute comfort of high-quality knit fabric, suitable for refined casual outings or home relaxation.",
+    "price": 85,
+    "rating": 4.7,
+    "category": "Apparel",
+    "image": "https://images.unsplash.com/photo-1552902865-b72c031ac5ea?auto=format&fit=crop&q=80&w=800",
+    "images": [
+      "https://images.unsplash.com/photo-1552902865-b72c031ac5ea?auto=format&fit=crop&q=80&w=800"
+    ],
+    "isAvailable": true,
+    "variants": [
+      {
+        "type": "size",
+        "label": "Size",
+        "options": [
+          "XS",
+          "S",
+          "M",
+          "L",
+          "XL"
+        ]
+      },
+      {
+        "type": "color",
+        "label": "Color",
+        "options": [
+          "Heather Gray",
+          "Pitch Black",
+          "Mid-Shift Blue"
+        ]
+      }
+    ],
+    "specs": [
+      {
+        "label": "Weight",
+        "value": "450gsm Heavyweight"
+      },
+      {
+        "label": "Material",
+        "value": "100% GOTS Certified Organic Cotton"
+      },
+      {
+        "label": "Cuffs",
+        "value": "Premium 1x1 Ribbed"
+      },
+      {
+        "label": "Waistband",
+        "value": "Flat Knit Drawcord"
+      },
+      {
+        "label": "Pockets",
+        "value": "Deep Side Welt + Hidden Back"
+      }
+    ]
+  },
+  {
+    "id": "15",
+    "name": "Essential Graphic T-Shirt",
+    "description": "A modern classic, our heavyweight graphic tee is made from long-staple combed cotton for a smooth, substantial hand-feel. Featuring limited-edition modular artwork screen-printed with eco-friendly inks, this shirt maintains its shape and vibrant print through countless cycles. A centerpiece for any streetwear ensemble.",
+    "price": 45,
+    "rating": 4.5,
+    "category": "Apparel",
+    "image": "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&q=80&w=800",
+    "images": [
+      "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&q=80&w=800"
+    ],
+    "isAvailable": true,
+    "variants": [
+      {
+        "type": "size",
+        "label": "Size",
+        "options": [
+          "S",
+          "M",
+          "L",
+          "XL",
+          "XXL"
+        ]
+      },
+      {
+        "type": "color",
+        "label": "Color",
+        "options": [
+          "Optic White",
+          "Ink Black",
+          "Cement"
+        ]
+      }
+    ],
+    "specs": [
+      {
+        "label": "Fabric",
+        "value": "250gsm Combed Cotton"
+      },
+      {
+        "label": "Print Method",
+        "value": "Water-Based Screen Print"
+      },
+      {
+        "label": "Collar",
+        "value": "Tight-Knit Rib"
+      },
+      {
+        "label": "Fit",
+        "value": "Boxy / Dropped Shoulder"
+      },
+      {
+        "label": "Treatment",
+        "value": "Pre-Shrunk & Bio-Washed"
+      }
+    ]
+  },
+  {
+    "id": "16",
+    "name": "Heritage Denim Jacket",
+    "description": "Tribute to 1950s workwear, our Heritage Denim Jacket is crafted from 14oz raw selvedge denim. Over time, it will develop a unique character based on your movements. Featuring shank button closures, double-needle stitching, and a classic boxy silhouette, this is a multi-generational piece built to last decades.",
+    "price": 185,
+    "rating": 4.8,
+    "category": "Apparel",
+    "image": "https://images.unsplash.com/photo-1576995853123-5a10305d93c0?auto=format&fit=crop&q=80&w=800",
+    "images": [
+      "https://images.unsplash.com/photo-1576995853123-5a10305d93c0?auto=format&fit=crop&q=80&w=800"
+    ],
+    "isAvailable": true,
+    "variants": [
+      {
+        "type": "size",
+        "label": "Size",
+        "options": [
+          "S",
+          "M",
+          "L",
+          "XL"
+        ]
+      },
+      {
+        "type": "color",
+        "label": "Wash",
+        "options": [
+          "Indigo Raw",
+          "Stonewashed",
+          "Acid Wash"
+        ]
+      }
+    ],
+    "specs": [
+      {
+        "label": "Denim",
+        "value": "14oz Selvedge (Japanese)"
+      },
+      {
+        "label": "Thread",
+        "value": "High-Strength Core-Spun"
+      },
+      {
+        "label": "Hardware",
+        "value": "Custom Embossed Metal"
+      },
+      {
+        "label": "Detail",
+        "value": "Internal Selvedge ID"
+      },
+      {
+        "label": "Reinforcement",
+        "value": "Copper Rivets at Stress Points"
+      }
+    ]
+  },
+  {
+    "id": "17",
+    "name": "Full-Grain Leather Bifold",
+    "description": "Architecturally designed for the modern minimalist. Hand-stitched from Italian vegetable-tanned leather, this bifold features an ultra-slim profile without compromising on capacity. The dedicated RFID-shielded liner protects your digital assets, while the leather develops a rich patina over time.",
+    "price": 95,
+    "rating": 4.8,
+    "category": "Accessories",
+    "image": "https://images.unsplash.com/photo-1627123424574-724758594e93?auto=format&fit=crop&q=80&w=800",
+    "images": [
+      "https://images.unsplash.com/photo-1627123424574-724758594e93?auto=format&fit=crop&q=80&w=800"
+    ],
+    "isAvailable": true,
+    "variants": [
+      {
+        "type": "color",
+        "label": "Color",
+        "options": [
+          "Cognac",
+          "Espresso",
+          "Midnight Black"
+        ]
+      }
+    ],
+    "specs": [
+      {
+        "label": "leather",
+        "value": "Certified Veg-Tanned Italian"
+      },
+      {
+        "label": "Capacity",
+        "value": "8 Card Slots + Cash Sleeve"
+      },
+      {
+        "label": "Protection",
+        "value": "Integrated RFID Shield"
+      },
+      {
+        "label": "Stitching",
+        "value": "Saddle-Stitched Waxed Thread"
+      },
+      {
+        "label": "Dimensions",
+        "value": "11cm x 9cm x 1cm"
+      }
+    ]
+  },
+  {
+    "id": "18",
+    "name": "Technical Aviator Sunglasses",
+    "description": "A futuristic rebuild of the iconic aviator. Precision-engineered from aerospace-grade titanium with high-definition polarized lenses. Featuring anti-reflective coating and 100% UVA/UVB protection, these frames offer a weightless feel and crystal-clear optics for the discerning pilot or urban explorer.",
+    "price": 225,
+    "rating": 4.9,
+    "category": "Accessories",
+    "image": "https://images.unsplash.com/photo-1572635196237-14b3f281503f?auto=format&fit=crop&q=80&w=800",
+    "images": [
+      "https://images.unsplash.com/photo-1572635196237-14b3f281503f?auto=format&fit=crop&q=80&w=800"
+    ],
+    "isAvailable": true,
+    "variants": [
+      {
+        "type": "color",
+        "label": "Lens Tech",
+        "options": [
+          "G15 Polarized",
+          "Sapphire Mirror",
+          "Photochromic"
+        ]
+      }
+    ],
+    "specs": [
+      {
+        "label": "Frame",
+        "value": "Grade 5 Titanium"
+      },
+      {
+        "label": "Lens",
+        "value": "Nylon HD Polarized"
+      },
+      {
+        "label": "Coating",
+        "value": "Hydrophobic & Oleophobic"
+      },
+      {
+        "label": "Hinge",
+        "value": "Screwless Flex-Hinge"
+      },
+      {
+        "label": "Weight",
+        "value": "18g"
+      }
+    ]
+  },
+  {
+    "id": "19",
+    "name": "Modular Canvas Tote",
+    "description": "The ultimate utility carry-all. Constructed from 18oz waxed military-grade canvas with vegetable-tanned leather handles. Featuring a modular interior with padded laptop sleeve and multiple organization pockets. Water-resistant and highly durable, this tote transitions seamlessly from grocery runs to executive meetings.",
+    "price": 65,
+    "rating": 4.6,
+    "category": "Accessories",
+    "image": "https://images.unsplash.com/photo-1590874103328-eac38a683ce7?auto=format&fit=crop&q=80&w=800",
+    "images": [
+      "https://images.unsplash.com/photo-1590874103328-eac38a683ce7?auto=format&fit=crop&q=80&w=800"
+    ],
+    "isAvailable": true,
+    "variants": [
+      {
+        "type": "color",
+        "label": "Color",
+        "options": [
+          "Olive Drab",
+          "Deep Navy",
+          "Heritage Tan"
+        ]
+      }
+    ],
+    "specs": [
+      {
+        "label": "Canvas",
+        "value": "18oz Heavy-Weight Waxed"
+      },
+      {
+        "label": "Handles",
+        "value": "Full-Grain English Bridle Leather"
+      },
+      {
+        "label": "Laptop",
+        "value": "Padded Compartment (up to 14\")"
+      },
+      {
+        "label": "Hardware",
+        "value": "Solid Brass Rivets"
+      },
+      {
+        "label": "Capacity",
+        "value": "22 Liters"
+      }
+    ]
+  },
+  {
+    "id": "20",
+    "name": "Insulated Kinetic Flask",
+    "description": "Advanced hydration technology for the summit or the street. Double-wall vacuum insulation keeps liquids ice-cold for 36 hours or steaming hot for 18. The scratch-resistant powder coat finish and leak-proof wide-mouth lid ensure reliability in any environment. BPA-free and 100% recyclable.",
+    "price": 45,
+    "rating": 4.8,
+    "category": "Accessories",
+    "image": "https://images.unsplash.com/photo-1602143407151-7111542de6e8?auto=format&fit=crop&q=80&w=800",
+    "images": [
+      "https://images.unsplash.com/photo-1602143407151-7111542de6e8?auto=format&fit=crop&q=80&w=800"
+    ],
+    "isAvailable": true,
+    "variants": [
+      {
+        "type": "color",
+        "label": "Finish",
+        "options": [
+          "Matte Stealth",
+          "Gloss White",
+          "Electric Teal",
+          "Rose Copper"
+        ]
+      }
+    ],
+    "specs": [
+      {
+        "label": "Material",
+        "value": "18/8 Pro-Grade Stainless Steel"
+      },
+      {
+        "label": "Insulation",
+        "value": "TempShield™ Dual Wall"
+      },
+      {
+        "label": "Volume",
+        "value": "24oz / 710ml"
+      },
+      {
+        "label": "Exterior",
+        "value": "Proprietary Powder Coat"
+      },
+      {
+        "label": "Lid",
+        "value": "Insulated Honeycomb™ Wide-Mouth"
+      }
+    ]
+  },
+  {
+    "id": "21",
+    "name": "Chrono-Titanium Automatic",
+    "description": "A masterpiece of precision engineering and horological tradition. Featuring a Swiss-made mechanical movement with 42-hour power reserve, housed in a sandblasted titanium case. The sapphire crystal with multi-layer anti-reflective coating protects a dial inspired by aerospace instrumentation. Waterproof to 100 meters.",
+    "price": 2850,
+    "rating": 4.9,
+    "category": "Accessories",
+    "image": "https://images.unsplash.com/photo-1524592094714-0f0654e20314?auto=format&fit=crop&q=80&w=800",
+    "images": [
+      "https://images.unsplash.com/photo-1524592094714-0f0654e20314?auto=format&fit=crop&q=80&w=800"
+    ],
+    "isAvailable": true,
+    "variants": [
+      {
+        "type": "material",
+        "label": "Strap",
+        "options": [
+          "Titanium Link",
+          "FKM Rubber",
+          "Cordura Hybrid"
+        ]
+      }
+    ],
+    "specs": [
+      {
+        "label": "Movement",
+        "value": "Caliber SW200-1 Automatic"
+      },
+      {
+        "label": "Case",
+        "value": "42mm Grade 5 Titanium"
+      },
+      {
+        "label": "Crystal",
+        "value": "Domed Sapphire AR"
+      },
+      {
+        "label": "Lume",
+        "value": "Super-LumiNova® Grade X1"
+      },
+      {
+        "label": "WR",
+        "value": "10 ATM (100m)"
+      }
+    ]
+  },
+  {
+    "id": "22",
+    "name": "Nomad Travel Backpack 40L",
+    "description": "Engineered for the global traveler, the Nomad is a carry-on compatible powerhouse. Featuring a 180-degree clamshell opening for easy packing, a dedicated TSA-compliant tech compartment, and hidden security pockets. Made from recycled X-Pac fabric, it's lightweight, waterproof, and virtually indestructible.",
+    "price": 245,
+    "rating": 4.8,
+    "category": "Accessories",
+    "image": "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&q=80&w=800",
+    "images": [
+      "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&q=80&w=800"
+    ],
+    "isAvailable": true,
+    "variants": [
+      {
+        "type": "color",
+        "label": "Color",
+        "options": [
+          "Stealth Black",
+          "Alpine Grey",
+          "Desert Sand"
+        ]
+      }
+    ],
+    "specs": [
+      {
+        "label": "Fabric",
+        "value": "VX42 X-Pac® Sailcloth"
+      },
+      {
+        "label": "Tech Space",
+        "value": "Padded 16\" MacBook Pro Compartment"
+      },
+      {
+        "label": "Hardware",
+        "value": "Fidlock® Magnetic Buckles"
+      },
+      {
+        "label": "Zippers",
+        "value": "YKK® RC-Coil (Lockable)"
+      },
+      {
+        "label": "Weight",
+        "value": "1.45kg"
+      }
+    ]
+  },
+  {
+    "id": "23",
+    "name": "Artisan Ceramic Mug Set",
+    "description": "Individually hand-thrown by master potters using high-fire stoneware. Each set of 4 features a unique reactive glaze finish that ensures no two mugs are exactly alike. With a sturdy weighted base and ergonomic handle, these mugs bring a tactile elegance to your daily coffee or tea ritual.",
+    "price": 68,
+    "rating": 4.7,
+    "category": "Accessories",
+    "image": "https://images.unsplash.com/photo-1514228742587-6b1558fcca3d?auto=format&fit=crop&q=80&w=800",
+    "images": [
+      "https://images.unsplash.com/photo-1514228742587-6b1558fcca3d?auto=format&fit=crop&q=80&w=800"
+    ],
+    "isAvailable": true,
+    "variants": [
+      {
+        "type": "color",
+        "label": "Glaze Set",
+        "options": [
+          "Volcanic Ash",
+          "Celestial Blue",
+          "Dunes"
+        ]
+      }
+    ],
+    "specs": [
+      {
+        "label": "Material",
+        "value": "High-Fire Stoneware"
+      },
+      {
+        "label": "Quantity",
+        "value": "Set of 4"
+      },
+      {
+        "label": "Volume",
+        "value": "14oz / 415ml"
+      },
+      {
+        "label": "Finish",
+        "value": "Individual Reactive Glaze"
+      },
+      {
+        "label": "Rating",
+        "value": "Food, Dishwasher, Microwave Safe"
+      }
+    ]
+  },
+  {
+    "id": "24",
+    "name": "Vertex Smart Desk Lamp",
+    "description": "A revolutionary workspace light featuring circadian-sync technology. The Vertex adjusts its color temperature automatically throughout the day to support your natural rhythm. With a precise CRI of 98, it reveals colors in their true form, while the integrated Qi 2.0 base provides rapid wireless charging for your mobile devices.",
+    "price": 129,
+    "rating": 4.9,
+    "category": "Accessories",
+    "image": "https://images.unsplash.com/photo-1534105615256-13940a56ff44?auto=format&fit=crop&q=80&w=800",
+    "images": [
+      "https://images.unsplash.com/photo-1534105615256-13940a56ff44?auto=format&fit=crop&q=80&w=800"
+    ],
+    "isAvailable": true,
+    "variants": [
+      {
+        "type": "color",
+        "label": "Chassis",
+        "options": [
+          "Brushed Platinum",
+          "Obsidian",
+          "Champagne"
+        ]
+      }
+    ],
+    "specs": [
+      {
+        "label": "Optical",
+        "value": "98 CRI High-Fidelity LED"
+      },
+      {
+        "label": "Charging",
+        "value": "15W Qi 2.0 Wireless + USB-C PD"
+      },
+      {
+        "label": "Control",
+        "value": "Touch-Slide Dimming + App Sync"
+      },
+      {
+        "label": "Range",
+        "value": "2700K to 6500K"
+      },
+      {
+        "label": "Construction",
+        "value": "Aluminum & Recycled Polycarbonate"
+      }
+    ]
+  },
+  {
+    "id": "25",
+    "name": "Adobe Creative Cloud Annual",
+    "description": "Unlock your professional creative potential with the world's leading design suite. This annual subscription provides full access to 20+ desktop and mobile apps, including Photoshop, Illustrator, and Premiere Pro. Includes 1TB of cloud storage, Adobe Fonts, and the latest Generative AI features powered by Adobe Firefly.",
+    "price": 599,
+    "rating": 4.7,
+    "category": "Digital",
+    "image": "https://images.unsplash.com/photo-1626785774573-4b799315345d?auto=format&fit=crop&q=80&w=800",
+    "images": [
+      "https://images.unsplash.com/photo-1626785774573-4b799315345d?auto=format&fit=crop&q=80&w=800"
+    ],
+    "isAvailable": true,
+    "variants": [
+      {
+        "type": "license",
+        "label": "Plan",
+        "options": [
+          "Creative Cloud All Apps",
+          "Single App",
+          "Team Member"
+        ]
+      }
+    ],
+    "specs": [
+      {
+        "label": "Softwares",
+        "value": "Photoshop, Illustrator, Premiere + 20 more"
+      },
+      {
+        "label": "Storage",
+        "value": "1TB Adobe Cloud Storage"
+      },
+      {
+        "label": "Services",
+        "value": "Adobe Fonts, Behance, Portfolio"
+      },
+      {
+        "label": "AI",
+        "value": "Adobe Firefly Integration"
+      },
+      {
+        "label": "Deployment",
+        "value": "Instant Digital Key"
+      }
+    ]
+  },
+  {
+    "id": "26",
+    "name": "Spotify Premium Family Plan",
+    "description": "The ultimate audio experience for the whole household. Spotify Premium Family offers 6 individual accounts, each with their own library and personalized recommendations. Enjoy completely ad-free music, offline playback on all devices, and the specialized Spotify Kids app for the younger listeners in your family.",
+    "price": 179,
+    "rating": 4.8,
+    "category": "Digital",
+    "image": "https://images.unsplash.com/photo-1614680376573-df3480f0c6ff?auto=format&fit=crop&q=80&w=800",
+    "images": [
+      "https://images.unsplash.com/photo-1614680376573-df3480f0c6ff?auto=format&fit=crop&q=80&w=800"
+    ],
+    "isAvailable": true,
+    "variants": [
+      {
+        "type": "license",
+        "label": "Duration",
+        "options": [
+          "12 Months Prepaid",
+          "24 Months Bundle"
+        ]
+      }
+    ],
+    "specs": [
+      {
+        "label": "Users",
+        "value": "Up to 6 Individual Accounts"
+      },
+      {
+        "label": "Audio",
+        "value": "Very High Quality (320kbps)"
+      },
+      {
+        "label": "Features",
+        "value": "Spotify Kids, Family Mix"
+      },
+      {
+        "label": "Offline",
+        "value": "Yes (Unlimited Downloads)"
+      },
+      {
+        "label": "Region",
+        "value": "Global Compatibility"
+      }
+    ]
+  },
+  {
+    "id": "27",
+    "name": "Notion Pro Workspace",
+    "description": "Empower your team with a unified digital headquarters. Notion Pro Workspace combines documents, project tracking, wikis, and an advanced relational database system into a single, intuitive interface. This plan includes unlimited file uploads, unlimited collaborators, and early access to Notion AI to accelerate your workflow.",
+    "price": 96,
+    "rating": 4.9,
+    "category": "Digital",
+    "image": "https://images.unsplash.com/photo-1547489432-cf93fa6c71ee?auto=format&fit=crop&q=80&w=800",
+    "images": [
+      "https://images.unsplash.com/photo-1547489432-cf93fa6c71ee?auto=format&fit=crop&q=80&w=800"
+    ],
+    "isAvailable": true,
+    "variants": [
+      {
+        "type": "license",
+        "label": "Workspace",
+        "options": [
+          "Plus Plan",
+          "Business Plan",
+          "Enterprise"
+        ]
+      }
+    ],
+    "specs": [
+      {
+        "label": "Blocks",
+        "value": "Unlimited Storage & Pages"
+      },
+      {
+        "label": "History",
+        "value": "30-Day Version History"
+      },
+      {
+        "label": "Security",
+        "value": "Advanced Permission Controls"
+      },
+      {
+        "label": "Integration",
+        "value": "Slack, GitHub, Jira + API"
+      },
+      {
+        "label": "AI",
+        "value": "Notion AI (Optional Add-on)"
+      }
+    ]
+  },
+  {
+    "id": "28",
+    "name": "Apex Photography Masterclass",
+    "description": "Go from amateur to expert with 60+ hours of modular video instruction from world-renowned photographers. This masterclass covers everything from cinematic lighting and manual camera control to high-level post-processing in Lightroom and Capture One. Includes a massive library of 500+ RAW files and custom preset packs.",
+    "price": 249,
+    "rating": 4.9,
+    "category": "Digital",
+    "image": "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&q=80&w=800",
+    "images": [
+      "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&q=80&w=800"
+    ],
+    "isAvailable": true,
+    "variants": [
+      {
+        "type": "license",
+        "label": "Access",
+        "options": [
+          "Standard (Lifetime)",
+          "Pro (Inc. Coaching)"
+        ]
+      }
+    ],
+    "specs": [
+      {
+        "label": "Curriculum",
+        "value": "45 Modules / 250+ Lessons"
+      },
+      {
+        "label": "Assets",
+        "value": "500+ Professional RAW Files"
+      },
+      {
+        "label": "Tools",
+        "value": "100+ Lightroom Presets"
+      },
+      {
+        "label": "Community",
+        "value": "Discord Private Access"
+      },
+      {
+        "label": "Certificate",
+        "value": "Industry Recognized"
+      }
+    ]
+  },
+  {
+    "id": "29",
+    "name": "Vertex Ghost VPN Premium",
+    "description": "Complete digital anonymity with zero compromise on speed. Vertex Ghost VPN utilizes proprietary tunneling protocols to provide military-grade encryption across all your devices. With 5,000+ ultra-fast servers in 94 countries, you can bypass censorship, secure your traffic on public Wi-Fi, and stream content globally without buffering.",
+    "price": 79,
+    "rating": 4.7,
+    "category": "Digital",
+    "image": "https://images.unsplash.com/photo-1563013544-824ae1b704d3?auto=format&fit=crop&q=80&w=800",
+    "images": [
+      "https://images.unsplash.com/photo-1563013544-824ae1b704d3?auto=format&fit=crop&q=80&w=800"
+    ],
+    "isAvailable": true,
+    "variants": [
+      {
+        "type": "license",
+        "label": "Subscription",
+        "options": [
+          "12 Months",
+          "24 Months (Best Value)"
+        ]
+      }
+    ],
+    "specs": [
+      {
+        "label": "Encryption",
+        "value": "AES-256-GCM Military Grade"
+      },
+      {
+        "label": "Network",
+        "value": "5,000+ Servers (10Gbps Capable)"
+      },
+      {
+        "label": "Devices",
+        "value": "Up to 10 Simultaneous Connections"
+      },
+      {
+        "label": "Policy",
+        "value": "Verified No-Logs Architecture"
+      },
+      {
+        "label": "Kill Switch",
+        "value": "Automatic System-Level"
+      }
+    ]
+  },
+  {
+    "id": "30",
+    "name": "Vertex Cloud 10TB Pro",
+    "description": "The ultimate secure storage solution for creative professionals and enterprises. Vertex Cloud provides a centralized, encrypted repository for all your massive files. Featuring intelligent block-level sync, real-time collaboration tools, and advanced ransomware protection. Your data is mirrored across three global data centers for maximum redundancy.",
+    "price": 149,
+    "rating": 4.8,
+    "category": "Digital",
+    "image": "https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&q=80&w=800",
+    "images": [
+      "https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&q=80&w=800"
+    ],
+    "isAvailable": true,
+    "variants": [
+      {
+        "type": "storage",
+        "label": "Storage",
+        "options": [
+          "10TB Individual",
+          "50TB Team",
+          "Custom Enterprise"
+        ]
+      }
+    ],
+    "specs": [
+      {
+        "label": "Capacity",
+        "value": "10TB High-Speed SSD Storage"
+      },
+      {
+        "label": "Security",
+        "value": "Zero-Knowledge End-to-End Encryption"
+      },
+      {
+        "label": "Transfer",
+        "value": "Unlimited Bandwidth"
+      },
+      {
+        "label": "Backup",
+        "value": "3-2-1 Redundancy Arch"
+      },
+      {
+        "label": "Compliance",
+        "value": "GDPR / HIPAA Ready"
+      }
+    ]
+  }
+]

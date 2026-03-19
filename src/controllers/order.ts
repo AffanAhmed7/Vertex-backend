@@ -144,7 +144,19 @@ export const OrderController = {
             const userId = (req as any).user.id;
             const orders = await prisma.order.findMany({
                 where: { userId },
-                include: { _count: { select: { items: true } } },
+                include: {
+                    items: {
+                        include: {
+                            product: {
+                                select: {
+                                    name: true,
+                                    image: true,
+                                },
+                            },
+                        },
+                    },
+                    _count: { select: { items: true } },
+                },
                 orderBy: { createdAt: 'desc' },
             });
 

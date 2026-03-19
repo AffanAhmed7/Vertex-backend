@@ -52,11 +52,38 @@ model User {
   // Relations
   orders        Order[]
   reviews       Review[]
+  addresses     Address[]
   auditLogs     AuditLog[]
   refreshTokens RefreshToken[]
   cartItems     CartItem[]
 
   @@map("users")
+  @@schema("ecommerce")
+}
+
+enum AddressType {
+  SHIPPING
+  BILLING
+
+  @@schema("ecommerce")
+}
+
+model Address {
+  id          String      @id @default(uuid())
+  userId      String
+  user        User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  type        AddressType @default(SHIPPING)
+  fullName    String
+  street      String
+  city        String
+  postalCode  String
+  country     String
+  isDefault   Boolean     @default(false)
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+
+  @@index([userId])
+  @@map("addresses")
   @@schema("ecommerce")
 }
 
@@ -110,7 +137,10 @@ model Product {
   isActive    Boolean  @default(true)
   avgRating   Float    @default(0)
   numReviews  Int      @default(0)
-  image        String?
+  image       String?
+  images      Json?    // Array of image URLs
+  variants    Json?    // Product options like size, color
+  specs       Json?    // Technical specifications
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 

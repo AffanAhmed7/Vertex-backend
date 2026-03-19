@@ -16,10 +16,11 @@ export const AuthController = {
         try {
             const result = registerSchema.safeParse(req.body);
             if (!result.success) {
+                const errorDetails = result.error.issues.map((err: any) => err.message).join('. ');
                 return res.status(400).json({
                     success: false,
                     error: 'Validation Error',
-                    message: 'Invalid input data',
+                    message: errorDetails || 'Invalid input data',
                     details: result.error.format()
                 });
             }
@@ -89,10 +90,11 @@ export const AuthController = {
         try {
             const result = loginSchema.safeParse(req.body);
             if (!result.success) {
+                const errorDetails = result.error.issues.map((err: any) => err.message).join('. ');
                 return res.status(400).json({
                     success: false,
                     error: 'Validation Error',
-                    message: 'Invalid input data',
+                    message: errorDetails || 'Invalid input data',
                     details: result.error.format()
                 });
             }
@@ -146,12 +148,12 @@ export const AuthController = {
 
             const user = await prisma.user.findUnique({ where: { email } });
             if (!user) {
-                return res.status(401).json({ success: false, error: 'Unauthorized', message: 'Invalid credentials' });
+                return res.status(401).json({ success: false, error: 'Unauthorized', message: 'No account found with this email. Please sign up instead.' });
             }
 
             const isPasswordValid = await comparePassword(password, user.passwordHash);
             if (!isPasswordValid) {
-                return res.status(401).json({ success: false, error: 'Unauthorized', message: 'Invalid credentials' });
+                return res.status(401).json({ success: false, error: 'Unauthorized', message: 'Incorrect password. Please try again.' });
             }
 
             // Normal users cannot login as admins unless they use the special credentials
@@ -440,17 +442,10 @@ export const AuthController = {
                     });
                     logger.info({ userId: user.id, email }, 'Linked Google account to existing user');
                 } else {
-                    user = await prisma.user.create({
-                        data: {
-                            email,
-                            name: name || email.split('@')[0],
-                            passwordHash: await hashPassword(`${uid}:${Date.now()}`), // random; password login not used
-                            googleUid: uid,
-                            role: 'CUSTOMER',
-                            emailVerified: true,
-                        },
+                    return res.status(401).json({
+                        success: false,
+                        message: 'No account found for this Google email. Please register first.'
                     });
-                    logger.info({ userId: user.id, email }, 'New user created via Google Auth');
                 }
             }
 

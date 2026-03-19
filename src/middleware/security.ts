@@ -8,7 +8,7 @@ import { redisConnection } from '../lib/redis.js';
  */
 export const globalLimiter = rateLimit({
     windowMs: 15 * 60 * 1000,
-    limit: 100,
+    limit: 10000, // Effectively disabled for dev
     standardHeaders: 'draft-7',
     legacyHeaders: false,
     store: new RedisStore({
@@ -25,7 +25,7 @@ export const globalLimiter = rateLimit({
  */
 export const authLimiter = rateLimit({
     windowMs: 15 * 60 * 1000,
-    limit: 5,
+    limit: 1000, // Effectively disabled for dev
     standardHeaders: true,
     legacyHeaders: false,
     store: new RedisStore({

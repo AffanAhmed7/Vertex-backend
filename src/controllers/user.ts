@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import { prisma } from '../lib/prisma.js';
 import { createAuditLog } from '../lib/audit.js';
 import { logger } from '../utils/logger.js';
+import { updateProfileSchema } from '../schemas/user.schema.js';
 
 export const UserController = {
     /**
@@ -9,8 +10,8 @@ export const UserController = {
      */
     async getUsers(req: Request, res: Response) {
         try {
-            const page = Number(req.query.page) || 1;
-            const limit = Number(req.query.limit) || 10;
+            const page = Number(req.query['page']) || 1;
+            const limit = Number(req.query['limit']) || 10;
             const skip = (page - 1) * limit;
 
             const [users, total] = await Promise.all([
@@ -112,6 +113,53 @@ export const UserController = {
         } catch (error) {
             const userId = Array.isArray(req.params.id) ? req.params.id[0] : req.params.id;
             logger.error({ err: error, userId }, 'Change role error');
+            return res.status(500).json({ success: false, error: 'Internal Server Error' });
+        }
+    },
+
+    /**
+     * Update current user profile
+     */
+    async updateMe(req: Request, res: Response) {
+        try {
+            const userId = (req as any).user.id;
+            const result = updateProfileSchema.safeParse(req.body);
+
+            if (!result.success) {
+                return res.status(400).json({ success: false, error: 'Validation Error', details: result.error.format() });
+            }
+
+            const { name, email } = result.data;
+            const updateData: any = {};
+            
+            if (name) updateData.name = name;
+            if (email) {
+                // Check if email is already taken
+                const existingUser = await prisma.user.findUnique({ where: { email } });
+                if (existingUser && existingUser.id !== userId) {
+                    return res.status(400).json({ success: false, error: 'Conflict', message: 'Email already taken' });
+                }
+                updateData.email = email;
+            }
+
+            if (Object.keys(updateData).length === 0) {
+                return res.status(400).json({ success: false, error: 'Bad Request', message: 'No data provided for update' });
+            }
+
+            const user = await prisma.user.update({
+                where: { id: userId },
+                data: updateData,
+                select: {
+                    id: true,
+                    email: true,
+                    name: true,
+                    role: true,
+                },
+            });
+
+            return res.status(200).json({ success: true, data: user, message: 'Profile updated successfully' });
+        } catch (error) {
+            logger.error({ err: error, userId: (req as any).user?.id }, 'Update profile error');
             return res.status(500).json({ success: false, error: 'Internal Server Error' });
         }
     }

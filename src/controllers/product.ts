@@ -60,18 +60,26 @@ export const ProductController = {
     /**
      * Get all products with pagination and category filter
      */
-    async getProducts(req: Request, res: Response) {
+    async getProducts(req: Request, res: Response): Promise<any> {
         try {
-            const page = Number(req.query.page) || 1;
-            const limit = Number(req.query.limit) || 10;
-            const categoryId = typeof req.query.categoryId === 'string' ? req.query.categoryId : undefined;
-            const search = typeof req.query.search === 'string' ? req.query.search : undefined;
-            const skip = (page - 1) * limit;
+            const page = Number(req.query.page);
+            const limit = Number(req.query.limit);
+            const category = req.query.category as string | undefined;
+            const search = req.query.search as string | undefined;
+            const sortBy = req.query.sortBy as string | undefined;
+            const minPrice = req.query.minPrice as string | undefined;
+            const maxPrice = req.query.maxPrice as string | undefined;
 
-            const where: any = { isActive: true };
-            if (categoryId) {
-                where.categoryId = categoryId;
+            const where: any = {
+                isActive: true,
+            };
+
+            if (category && category !== 'All') {
+                where.category = {
+                    name: category,
+                };
             }
+
             if (search) {
                 where.OR = [
                     { name: { contains: search, mode: 'insensitive' } },
@@ -80,13 +88,65 @@ export const ProductController = {
                 ];
             }
 
+            if (minPrice || maxPrice) {
+                where.price = {};
+                if (minPrice) where.price.gte = Number(minPrice);
+                if (maxPrice) where.price.lte = Number(maxPrice);
+            }
+
+            let orderBy: any = { createdAt: 'desc' };
+            if (sortBy) {
+                switch (sortBy) {
+                    case 'price-low':
+                        orderBy = { price: 'asc' };
+                        break;
+                    case 'price-high':
+                        orderBy = { price: 'desc' };
+                        break;
+                    case 'rating':
+                        orderBy = { avgRating: 'desc' };
+                        break;
+                    case 'newest':
+                        orderBy = { createdAt: 'desc' };
+                        break;
+                }
+            }
+
+            // If page is not provided, we return all products (old behavior for shop page)
+            if (!page && !limit) {
+                const products = await prisma.product.findMany({
+                    where,
+                    include: {
+                        category: true,
+                    },
+                    orderBy,
+                }) as any[];
+
+                const formattedProducts = products.map(p => ({
+                    id: p.id,
+                    name: p.name,
+                    description: p.description,
+                    price: Number(p.price),
+                    rating: p.avgRating,
+                    category: p.category?.name || 'Uncategorized',
+                    image: p.image,
+                    images: p.images,
+                    variants: p.variants,
+                    specs: p.specs,
+                    isAvailable: p.isActive && p.stock > 0,
+                }));
+
+                return res.status(200).json(formattedProducts);
+            }
+
+            const skip = (page - 1) * limit;
             const [products, total] = await Promise.all([
                 prisma.product.findMany({
                     where,
                     include: { category: { select: { name: true, slug: true } } },
                     skip,
                     take: limit,
-                    orderBy: { createdAt: 'desc' },
+                    orderBy,
                 }),
                 prisma.product.count({ where }),
             ]);
@@ -107,22 +167,33 @@ export const ProductController = {
         }
     },
 
-    /**
-     * Get single product
-     */
-    async getProduct(req: Request, res: Response) {
+    async getProduct(req: Request, res: Response): Promise<any> {
         try {
             const { id } = req.params;
             const product = await prisma.product.findUnique({
                 where: { id: String(id) },
-                include: { category: { select: { name: true, slug: true } } },
-            });
+                include: { category: true },
+            }) as any;
 
             if (!product) {
                 return res.status(404).json({ success: false, error: 'Not Found', message: 'Product not found' });
             }
 
-            return res.status(200).json({ success: true, data: product });
+            const formattedProduct = {
+                id: product.id,
+                name: product.name,
+                description: product.description,
+                price: Number(product.price),
+                rating: product.avgRating,
+                category: product.category?.name || 'Uncategorized',
+                image: product.image,
+                images: product.images,
+                variants: product.variants,
+                specs: product.specs,
+                isAvailable: product.isActive && product.stock > 0,
+            };
+
+            return res.status(200).json(formattedProduct);
         } catch (error) {
             logger.error({ err: error, productId: req.params?.id }, 'Get product error');
             return res.status(500).json({ success: false, error: 'Internal Server Error', message: 'Failed to fetch product' });

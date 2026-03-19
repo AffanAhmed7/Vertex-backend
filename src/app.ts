@@ -9,8 +9,8 @@ import productRoutes from './routes/product.js';
 import cartRoutes from './routes/cart.js';
 import orderRoutes from './routes/order.js';
 import reviewRoutes from './routes/review.js';
+import addressRoutes from './routes/address.js';
 import analyticsRoutes from './routes/analytics.js';
-import { globalLimiter } from './middleware/security.js';
 import { requestLogger } from './middleware/request_logger.js';
 import { errorMiddleware } from './middleware/error.middleware.js';
 import { NotFoundError } from './utils/errors.js';
@@ -32,16 +32,17 @@ export function createApp(): Express {
                 scriptSrc: ["'self'", "'unsafe-inline'"],
                 styleSrc: ["'self'", "'unsafe-inline'"],
                 imgSrc: ["'self'", "data:", "https:"],
-                connectSrc: ["'self'"],
+                connectSrc: ["'self'", "https://*.firebaseio.com", "https://*.googleapis.com"],
             },
         },
+        crossOriginOpenerPolicy: false,
         xssFilter: true,
         noSniff: true,
         hidePoweredBy: true,
     }));
 
-    // Rate limiting
-    app.use('/api', globalLimiter);
+    // Rate limiting - Disabled for development
+    // app.use('/api', globalLimiter);
 
     // CORS configuration
     app.use(cors({
@@ -67,6 +68,7 @@ export function createApp(): Express {
     app.use('/api/products', productRoutes);
     app.use('/api/cart', cartRoutes);
     app.use('/api/orders', orderRoutes);
+    app.use('/api/addresses', addressRoutes);
     app.use('/api', reviewRoutes);
     app.use('/api/admin/analytics', analyticsRoutes);
 
