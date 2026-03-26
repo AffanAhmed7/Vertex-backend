@@ -1,0 +1,32 @@
+E:\Professional\Portfolio\E-Commerce Store\backend\node_modules\@prisma\client\src\runtime\getPrismaClient.ts:259
+        throw new PrismaClientInitializationError(
+              ^
+
+
+PrismaClientInitializationError: `PrismaClient` needs to be constructed with a non-empty, valid `PrismaClientOptions`:
+
+```
+new PrismaClient({
+  ...
+})
+```
+
+or
+
+```
+constructor() {
+  super({ ... });
+}
+```
+          
+    at new t (E:\Professional\Portfolio\E-Commerce Store\backend\node_modules\@prisma\client\src\runtime\getPrismaClient.ts:259:15)
+    at <anonymous> (E:\Professional\Portfolio\E-Commerce Store\backend\prisma\seed.ts:4:16)
+    at ModuleJob.run (node:internal/modules/esm/module_job:343:25)
+    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:647:26)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:117:5) {
+  clientVersion: '7.3.0',
+  errorCode: undefined,
+  retryable: undefined
+}
+
+Node.js v22.18.0

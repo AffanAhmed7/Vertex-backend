@@ -17,6 +17,7 @@ router.get('/health', (_req: Request, res: Response) => {
 
 import userRoutes from './routes/user.js';
 import productRoutes from './routes/product.js';
+import reviewRoutes from './routes/review.js';
 
 /**
  * API root endpoint
@@ -35,5 +36,8 @@ router.use('/api/products', productRoutes);
 
 // Admin User Management
 router.use('/api/admin/users', userRoutes);
+
+// Reviews
+router.use('/api', reviewRoutes);
 
 export default router;

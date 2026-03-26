@@ -58,6 +58,36 @@ export const ProductController = {
     },
 
     /**
+     * Get all products for admin panel (includes inactive, stock, sku)
+     */
+    async getAdminProducts(_req: Request, res: Response): Promise<any> {
+        try {
+            const products = await prisma.product.findMany({
+                include: { category: { select: { name: true } } },
+                orderBy: { createdAt: 'desc' },
+            }) as any[];
+
+            const formatted = products.map((p: any) => ({
+                id: p.id,
+                name: p.name,
+                sku: p.sku,
+                price: Number(p.price),
+                stock: p.stock,
+                category: p.category?.name || 'Uncategorized',
+                image: p.image || '',
+                status: p.stock === 0 ? 'Out of Stock' : p.stock < 10 ? 'Low Stock' : 'In Stock',
+                description: p.description,
+                isActive: p.isActive,
+            }));
+
+            return res.status(200).json({ success: true, data: formatted });
+        } catch (error) {
+            logger.error({ err: error }, 'Get admin products error');
+            return res.status(500).json({ success: false, error: 'Internal Server Error' });
+        }
+    },
+
+    /**
      * Get all products with pagination and category filter
      */
     async getProducts(req: Request, res: Response): Promise<any> {
@@ -233,7 +263,7 @@ export const ProductController = {
             });
 
             // Audit Log
-            await createAuditLog((req as any).user.id, 'CREATE', 'PRODUCT', product.id, { name: product.name, sku: product.sku });
+            await createAuditLog(req.user!.userId, 'CREATE', 'PRODUCT', product.id, { name: product.name, sku: product.sku });
 
             // Trigger background image optimization if images provided
             if (images && images.length > 0) {
@@ -286,7 +316,7 @@ export const ProductController = {
             });
 
             // Audit Log
-            await createAuditLog((req as any).user.id, 'UPDATE', 'PRODUCT', updatedProduct.id, { name: updatedProduct.name, sku: updatedProduct.sku });
+            await createAuditLog(req.user!.userId, 'UPDATE', 'PRODUCT', updatedProduct.id, { name: updatedProduct.name, sku: updatedProduct.sku });
 
             // Emit low stock alert to admins if applicable
             if (updatedProduct.stock < 5) {
@@ -319,7 +349,7 @@ export const ProductController = {
             const deletedProduct = await prisma.product.delete({ where: { id: String(id) } });
 
             // Audit Log
-            await createAuditLog((req as any).user.id, 'DELETE', 'PRODUCT', id as string, { name: deletedProduct.name, sku: deletedProduct.sku });
+            await createAuditLog(req.user!.userId, 'DELETE', 'PRODUCT', id as string, { name: deletedProduct.name, sku: deletedProduct.sku });
 
             return res.status(200).json({ success: true, message: 'Product deleted successfully' });
         } catch (error) {

@@ -62,11 +62,11 @@ export const CategoryController = {
             });
 
             // Audit Log
-            await createAuditLog((req as any).user.id, 'CREATE', 'CATEGORY', category.id, { name: category.name });
+            await createAuditLog(req.user!.userId, 'CREATE', 'CATEGORY', category.id, { name: category.name });
 
             return res.status(201).json({ success: true, data: category, message: 'Category created successfully' });
         } catch (error) {
-            logger.error({ err: error, userId: (req as any).user?.id, data: req.body }, 'Create category error');
+            logger.error({ err: error, userId: req.user?.userId, data: req.body }, 'Create category error');
             return res.status(500).json({ success: false, error: 'Internal Server Error', message: 'Failed to create category' });
         }
     },
@@ -100,11 +100,11 @@ export const CategoryController = {
             });
 
             // Audit Log
-            await createAuditLog((req as any).user.id, 'UPDATE', 'CATEGORY', updatedCategory.id, { name: updatedCategory.name });
+            await createAuditLog(req.user!.userId, 'UPDATE', 'CATEGORY', updatedCategory.id, { name: updatedCategory.name });
 
             return res.status(200).json({ success: true, data: updatedCategory, message: 'Category updated successfully' });
         } catch (error) {
-            logger.error({ err: error, categoryId: req.params?.id, userId: (req as any).user?.id }, 'Update category error');
+            logger.error({ err: error, categoryId: req.params?.id, userId: req.user?.userId }, 'Update category error');
             return res.status(500).json({ success: false, error: 'Internal Server Error', message: 'Failed to update category' });
         }
     },
@@ -132,11 +132,11 @@ export const CategoryController = {
             const deletedCategory = await prisma.category.delete({ where: { id: String(id) } });
 
             // Audit Log
-            await createAuditLog((req as any).user.id, 'DELETE', 'CATEGORY', id as string, { name: deletedCategory.name });
+            await createAuditLog(req.user!.userId, 'DELETE', 'CATEGORY', id as string, { name: deletedCategory.name });
 
             return res.status(200).json({ success: true, message: 'Category deleted successfully' });
         } catch (error) {
-            logger.error({ err: error, categoryId: req.params?.id, userId: (req as any).user?.id }, 'Delete category error');
+            logger.error({ err: error, categoryId: req.params?.id, userId: req.user?.userId }, 'Delete category error');
             return res.status(500).json({ success: false, error: 'Internal Server Error', message: 'Failed to delete category' });
         }
     },

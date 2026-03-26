@@ -13,10 +13,8 @@ export interface AuthTokens {
     refreshToken: string;
 }
 
-declare global {
-    namespace Express {
-        interface Request {
-            user?: TokenPayload;
-        }
+declare module 'express-serve-static-core' {
+    interface Request {
+        user?: TokenPayload;
     }
 }

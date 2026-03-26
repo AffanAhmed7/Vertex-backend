@@ -8,7 +8,7 @@ function getFirebaseCredential() {
     if (json) {
         try {
             return cert(JSON.parse(json));
-        } catch (err) {
+        } catch {
             // Fall back to ADC if JSON is invalid; request will fail later if creds are missing
             return applicationDefault();
         }

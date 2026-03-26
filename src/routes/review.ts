@@ -10,6 +10,7 @@ router.get('/products/:id/reviews', ReviewController.getProductReviews);
 
 // Protected routes (customer submitting a review)
 router.post('/products/:id/review', authenticate, ReviewController.createReview);
+router.get('/reviews/me', authenticate, ReviewController.getMyReviews);
 
 // Admin routes (deleting reviews)
 router.delete('/admin/reviews/:id', authenticate, authorize(Role.ADMIN), ReviewController.deleteReview);

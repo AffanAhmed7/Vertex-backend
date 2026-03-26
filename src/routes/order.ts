@@ -5,12 +5,15 @@ import { Role } from '../types/auth.js';
 
 const router = Router();
 
-// User routes
+// User routes (without ID)
 router.get('/', authenticate, OrderController.getOrders);
-router.get('/:id', authenticate, OrderController.getOrder);
 router.post('/', authenticate, OrderController.createOrder);
 
 // Admin routes
+router.get('/admin', authenticate, authorize(Role.ADMIN), OrderController.getAllOrders);
 router.patch('/admin/:id/status', authenticate, authorize(Role.ADMIN), OrderController.updateStatus);
+
+// User routes (with ID) - Must be last to prevent intercepting /admin
+router.get('/:id', authenticate, OrderController.getOrder);
 
 export default router;

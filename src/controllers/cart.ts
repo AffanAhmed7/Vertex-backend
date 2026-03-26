@@ -9,7 +9,7 @@ export const CartController = {
      */
     async getCart(req: Request, res: Response) {
         try {
-            const userId = (req as any).user.id;
+            const userId = req.user!.userId;
 
             const cartItems = await prisma.cartItem.findMany({
                 where: { userId },
@@ -30,7 +30,7 @@ export const CartController = {
 
             return res.status(200).json({ success: true, data: cartItems });
         } catch (error) {
-            logger.error({ err: error, userId: (req as any).user?.id }, 'Get cart error');
+            logger.error({ err: error, userId: req.user?.userId }, 'Get cart error');
             return res.status(500).json({ success: false, error: 'Internal Server Error', message: 'Failed to fetch cart' });
         }
     },
@@ -40,7 +40,7 @@ export const CartController = {
      */
     async addItem(req: Request, res: Response) {
         try {
-            const userId = (req as any).user.id;
+            const userId = req.user!.userId;
             const result = addToCartSchema.safeParse(req.body);
 
             if (!result.success) {
@@ -94,7 +94,7 @@ export const CartController = {
 
             return res.status(200).json({ success: true, data: cartItem, message: 'Item added to cart' });
         } catch (error) {
-            logger.error({ err: error, userId: (req as any).user?.id, productId: req.body?.productId }, 'Add to cart error');
+            logger.error({ err: error, userId: req.user?.userId, productId: req.body?.productId }, 'Add to cart error');
             return res.status(500).json({ success: false, error: 'Internal Server Error', message: 'Failed to add item to cart' });
         }
     },
@@ -104,7 +104,7 @@ export const CartController = {
      */
     async updateItem(req: Request, res: Response) {
         try {
-            const userId = (req as any).user.id;
+            const userId = req.user!.userId;
             const { productId } = req.params;
             const result = updateCartItemSchema.safeParse(req.body);
 
@@ -136,7 +136,7 @@ export const CartController = {
 
             return res.status(200).json({ success: true, data: updatedItem, message: 'Cart updated' });
         } catch (error) {
-            logger.error({ err: error, userId: (req as any).user?.id, productId: req.params?.productId }, 'Update cart error');
+            logger.error({ err: error, userId: req.user?.userId, productId: req.params?.productId }, 'Update cart error');
             return res.status(500).json({ success: false, error: 'Internal Server Error', message: 'Failed to update cart' });
         }
     },
@@ -146,7 +146,7 @@ export const CartController = {
      */
     async removeItem(req: Request, res: Response) {
         try {
-            const userId = (req as any).user.id;
+            const userId = req.user!.userId;
             const { productId } = req.params;
 
             const existingItem = await prisma.cartItem.findUnique({
@@ -163,7 +163,7 @@ export const CartController = {
 
             return res.status(200).json({ success: true, message: 'Item removed from cart' });
         } catch (error) {
-            logger.error({ err: error, userId: (req as any).user?.id, productId: req.params?.productId }, 'Remove from cart error');
+            logger.error({ err: error, userId: req.user?.userId, productId: req.params?.productId }, 'Remove from cart error');
             return res.status(500).json({ success: false, error: 'Internal Server Error', message: 'Failed to remove item from cart' });
         }
     },

@@ -47,6 +47,7 @@ model User {
   verificationToken String?
   verificationTokenExpiry DateTime?
   createdAt         DateTime @default(now())
+  twoFactorEnabled  Boolean  @default(false)
   updatedAt     DateTime @updatedAt
 
   // Relations
@@ -78,6 +79,7 @@ model Address {
   city        String
   postalCode  String
   country     String
+  phone       String?
   isDefault   Boolean     @default(false)
   createdAt   DateTime    @default(now())
   updatedAt   DateTime    @updatedAt
@@ -173,6 +175,7 @@ model Order {
   shippingAddress String?
   shippingCity    String?
   shippingZip     String?
+  shippingCountry String?
   
   createdAt       DateTime    @default(now())
   updatedAt       DateTime    @updatedAt

@@ -9,7 +9,7 @@ export const AddressController = {
      */
     async getAddresses(req: Request, res: Response) {
         try {
-            const userId = (req as any).user.id;
+            const userId = req.user!.userId;
             const addresses = await prisma.address.findMany({
                 where: { userId },
                 orderBy: { createdAt: 'desc' },
@@ -17,7 +17,7 @@ export const AddressController = {
 
             return res.status(200).json({ success: true, data: addresses });
         } catch (error) {
-            logger.error({ err: error, userId: (req as any).user?.id }, 'Get addresses error');
+            logger.error({ err: error, userId: req.user?.userId }, 'Get addresses error');
             return res.status(500).json({ success: false, error: 'Internal Server Error' });
         }
     },
@@ -27,7 +27,7 @@ export const AddressController = {
      */
     async createAddress(req: Request, res: Response) {
         try {
-            const userId = (req as any).user.id;
+            const userId = req.user!.userId;
             const result = createAddressSchema.safeParse(req.body);
 
             if (!result.success) {
@@ -59,7 +59,7 @@ export const AddressController = {
 
             return res.status(201).json({ success: true, data: address });
         } catch (error) {
-            logger.error({ err: error, userId: (req as any).user?.id }, 'Create address error');
+            logger.error({ err: error, userId: req.user?.userId }, 'Create address error');
             return res.status(500).json({ success: false, error: 'Internal Server Error' });
         }
     },
@@ -69,7 +69,7 @@ export const AddressController = {
      */
     async updateAddress(req: Request, res: Response) {
         try {
-            const userId = (req as any).user.id;
+            const userId = req.user!.userId;
             const id = req.params['id'] as string;
             const result = updateAddressSchema.safeParse(req.body);
 
@@ -98,7 +98,7 @@ export const AddressController = {
 
             return res.status(200).json({ success: true, data: updatedAddress });
         } catch (error) {
-            logger.error({ err: error, addressId: req.params['id'], userId: (req as any).user?.id }, 'Update address error');
+            logger.error({ err: error, addressId: req.params['id'], userId: req.user?.userId }, 'Update address error');
             return res.status(500).json({ success: false, error: 'Internal Server Error' });
         }
     },
@@ -108,7 +108,7 @@ export const AddressController = {
      */
     async deleteAddress(req: Request, res: Response) {
         try {
-            const userId = (req as any).user.id;
+            const userId = req.user!.userId;
             const id = req.params['id'] as string;
 
             const address = await prisma.address.findUnique({ where: { id } });
@@ -134,7 +134,7 @@ export const AddressController = {
 
             return res.status(200).json({ success: true, message: 'Address deleted successfully' });
         } catch (error) {
-            logger.error({ err: error, addressId: req.params['id'], userId: (req as any).user?.id }, 'Delete address error');
+            logger.error({ err: error, addressId: req.params['id'], userId: req.user?.userId }, 'Delete address error');
             return res.status(500).json({ success: false, error: 'Internal Server Error' });
         }
     },
@@ -144,7 +144,7 @@ export const AddressController = {
      */
     async setDefault(req: Request, res: Response) {
         try {
-            const userId = (req as any).user.id;
+            const userId = req.user!.userId;
             const id = req.params['id'] as string;
 
             const address = await prisma.address.findUnique({ where: { id } });
@@ -165,7 +165,7 @@ export const AddressController = {
 
             return res.status(200).json({ success: true, message: 'Default address updated' });
         } catch (error) {
-            logger.error({ err: error, addressId: req.params['id'], userId: (req as any).user?.id }, 'Set default address error');
+            logger.error({ err: error, addressId: req.params['id'], userId: req.user?.userId }, 'Set default address error');
             return res.status(500).json({ success: false, error: 'Internal Server Error' });
         }
     }

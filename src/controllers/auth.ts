@@ -74,7 +74,7 @@ export const AuthController = {
             return res.status(201).json({
                 success: true,
                 message: 'Registration successful',
-                user: { id: user.id, email: user.email, role: user.role as Role },
+                user: { id: user.id, email: user.email, name: user.name, role: user.role as Role },
                 ...tokens,
             });
         } catch (error) {
@@ -148,12 +148,12 @@ export const AuthController = {
 
             const user = await prisma.user.findUnique({ where: { email } });
             if (!user) {
-                return res.status(401).json({ success: false, error: 'Unauthorized', message: 'No account found with this email. Please sign up instead.' });
+                return res.status(401).json({ success: false, error: 'Unauthorized', message: 'Invalid email address or no account found' });
             }
 
             const isPasswordValid = await comparePassword(password, user.passwordHash);
             if (!isPasswordValid) {
-                return res.status(401).json({ success: false, error: 'Unauthorized', message: 'Incorrect password. Please try again.' });
+                return res.status(401).json({ success: false, error: 'Unauthorized', message: 'Wrong password. Please check your credentials and try again.' });
             }
 
             // Normal users cannot login as admins unless they use the special credentials
@@ -177,7 +177,7 @@ export const AuthController = {
             return res.status(200).json({
                 success: true,
                 message: 'Login successful',
-                user: { id: user.id, email: user.email, role: user.role as Role },
+                user: { id: user.id, email: user.email, name: user.name, role: user.role as Role },
                 ...tokens,
             });
         } catch (error) {
@@ -388,7 +388,7 @@ export const AuthController = {
                 success: true,
                 message: 'Email verified successfully. You can now log in.'
             });
-        } catch (error) {
+        } catch {
             return res.status(500).json({
                 success: false,
                 error: { code: 'INTERNAL_ERROR', message: 'Email verification failed' }

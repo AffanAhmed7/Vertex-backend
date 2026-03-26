@@ -33,6 +33,7 @@ export const createOrderSchema = z.object({
     shippingAddress: z.string().min(5, 'Address is required').max(255),
     shippingCity: z.string().min(2, 'City is required').max(100),
     shippingZip: z.string().min(4, 'ZIP code is required').max(20),
+    shippingCountry: z.string().min(2, 'Country is required').max(100).optional(),
 });
 
 export const updateOrderStatusSchema = z.object({

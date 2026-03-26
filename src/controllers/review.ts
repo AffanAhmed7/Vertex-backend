@@ -10,7 +10,7 @@ export const ReviewController = {
     async createReview(req: Request, res: Response) {
         try {
             const productId = req.params.id as string;
-            const userId = (req as any).user.id;
+            const userId = req.user!.userId;
 
             const result = createReviewSchema.safeParse(req.body);
             if (!result.success) {
@@ -59,7 +59,7 @@ export const ReviewController = {
 
             return res.status(201).json({ success: true, data: review, message: 'Review submitted successfully' });
         } catch (error) {
-            logger.error({ err: error, productId: req.params?.id, userId: (req as any).user?.id }, 'Create review error');
+            logger.error({ err: error, productId: req.params?.id, userId: req.user?.userId }, 'Create review error');
             return res.status(500).json({ success: false, error: 'Internal Server Error', message: 'Failed to submit review' });
         }
     },
@@ -77,6 +77,7 @@ export const ReviewController = {
                     user: {
                         select: {
                             email: true,
+                            name: true,
                         },
                     },
                 },
@@ -137,8 +138,36 @@ export const ReviewController = {
 
             return res.status(200).json({ success: true, message: 'Review deleted successfully' });
         } catch (error) {
-            logger.error({ err: error, reviewId: req.params?.id, userId: (req as any).user?.id }, 'Delete review error');
+            logger.error({ err: error, reviewId: req.params?.id, userId: req.user?.userId }, 'Delete review error');
             return res.status(500).json({ success: false, error: 'Internal Server Error', message: 'Failed to delete review' });
+        }
+    },
+
+    /**
+     * Get all reviews by the current user
+     */
+    async getMyReviews(req: Request, res: Response) {
+        try {
+            const userId = req.user!.userId;
+
+            const reviews = await prisma.review.findMany({
+                where: { userId },
+                include: {
+                    product: {
+                        select: {
+                            id: true,
+                            name: true,
+                            image: true,
+                        },
+                    },
+                },
+                orderBy: { createdAt: 'desc' },
+            });
+
+            return res.status(200).json({ success: true, data: reviews });
+        } catch (error) {
+            logger.error({ err: error, userId: req.user?.userId }, 'Get my reviews error');
+            return res.status(500).json({ success: false, error: 'Internal Server Error', message: 'Failed to fetch your reviews' });
         }
     },
 };

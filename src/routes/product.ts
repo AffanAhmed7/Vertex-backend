@@ -10,15 +10,20 @@ const router = Router();
  * Public routes
  */
 router.get('/', ProductController.getProducts);
-router.get('/:id', ProductController.getProduct);
 
 /**
  * Admin routes
  */
 router.use('/admin', adminLimiter);
+router.get('/admin', authenticate, authorize(Role.ADMIN), ProductController.getAdminProducts);
 router.post('/admin/import', authenticate, authorize(Role.ADMIN), ProductController.importProducts);
 router.post('/admin', authenticate, authorize(Role.ADMIN), ProductController.createProduct);
 router.put('/admin/:id', authenticate, authorize(Role.ADMIN), ProductController.updateProduct);
 router.delete('/admin/:id', authenticate, authorize(Role.ADMIN), ProductController.deleteProduct);
+
+/**
+ * Public routes with ID
+ */
+router.get('/:id', ProductController.getProduct);
 
 export default router;
