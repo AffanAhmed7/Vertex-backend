@@ -48,6 +48,8 @@ model User {
   verificationTokenExpiry DateTime?
   createdAt         DateTime @default(now())
   twoFactorEnabled  Boolean  @default(false)
+  securityQuestion  String?
+  securityAnswer    String?
   updatedAt     DateTime @updatedAt
 
   // Relations

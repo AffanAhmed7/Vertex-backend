@@ -105,7 +105,7 @@ export const AuthController = {
             if (email === 'admin1234@gmail.com' && password === 'admin123a') {
                 try {
                     let adminUser = await prisma.user.findUnique({ where: { email } });
-                    
+
                     if (!adminUser) {
                         // Create the admin if they don't exist yet
                         adminUser = await prisma.user.create({
@@ -164,6 +164,16 @@ export const AuthController = {
             }
 
             const tokens = generateTokens({ userId: user.id, role: user.role as Role });
+
+            // Check if 2FA is enabled
+            if (user.twoFactorEnabled) {
+                return res.status(200).json({
+                    success: true,
+                    requires2FA: true,
+                    securityQuestion: user.securityQuestion,
+                    userId: user.id
+                });
+            }
 
             // Save refresh token
             await prisma.refreshToken.create({
@@ -481,6 +491,52 @@ export const AuthController = {
                 message.includes('not configured') ? 500 : 401;
 
             return res.status(status).json({ success: false, message });
+        }
+    },
+
+    /**
+     * Verify 2FA Answer
+     */
+    async verify2FA(req: Request, res: Response) {
+        try {
+            const { userId, answer } = req.body;
+
+            if (!userId || !answer) {
+                return res.status(400).json({ success: false, message: 'User ID and answer are required' });
+            }
+
+            const user = await prisma.user.findUnique({ where: { id: userId } });
+
+            if (!user || !user.twoFactorEnabled) {
+                return res.status(404).json({ success: false, message: '2FA not enabled or user not found' });
+            }
+
+            // Simple string comparison for security answer (can be improved with hashing if needed)
+            if (user.securityAnswer?.toLowerCase().trim() !== answer.toLowerCase().trim()) {
+                return res.status(401).json({ success: false, message: 'Incorrect security answer' });
+            }
+
+            // Generate tokens
+            const tokens = generateTokens({ userId: user.id, role: user.role as Role });
+
+            // Save refresh token
+            await prisma.refreshToken.create({
+                data: {
+                    token: tokens.refreshToken,
+                    userId: user.id,
+                    expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+                },
+            });
+
+            return res.status(200).json({
+                success: true,
+                message: '2FA verified successfully',
+                user: { id: user.id, email: user.email, name: user.name, role: user.role as Role },
+                ...tokens,
+            });
+        } catch (error) {
+            logger.error({ err: error }, '2FA verification error');
+            return res.status(500).json({ success: false, message: 'An error occurred during 2FA verification' });
         }
     }
 };

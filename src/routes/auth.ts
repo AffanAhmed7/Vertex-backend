@@ -16,20 +16,27 @@ router.get('/verify', AuthController.verifyEmail);
 router.post('/forgot-password', AuthController.forgotPassword);
 router.post('/reset-password', AuthController.resetPassword);
 router.post('/google', AuthController.googleAuth);
+router.post('/verify-2fa', AuthController.verify2FA);
 
 // Protected: Get current user profile
 router.get('/me', authenticate, async (req, res) => {
     try {
         const user = await prisma.user.findUnique({
             where: { id: req.user!.userId },
-            select: { id: true, name: true, email: true, role: true },
+            select: { id: true, name: true, email: true, role: true, twoFactorEnabled: true, securityQuestion: true, securityAnswer: true },
         });
 
         if (!user) {
             return res.status(404).json({ success: false, message: 'User not found' });
         }
 
-        return res.json({ success: true, data: user });
+        const userData = {
+            ...user,
+            hasSecurityQuestion: !!(user.securityQuestion && user.securityAnswer),
+            securityAnswer: undefined,
+        };
+
+        return res.json({ success: true, data: userData });
     } catch (error) {
         return res.status(500).json({ success: false, message: 'Failed to fetch user' });
     }

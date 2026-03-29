@@ -129,24 +129,35 @@ export const UserController = {
                 return res.status(400).json({ success: false, error: 'Validation Error', details: result.error.format() });
             }
 
-            const { name, twoFactorEnabled } = result.data as any;
+            const { name, twoFactorEnabled, securityQuestion, securityAnswer } = result.data as any;
+
+            const updateData: any = {};
+            if (name !== undefined) updateData.name = name;
+            if (twoFactorEnabled !== undefined) updateData.twoFactorEnabled = twoFactorEnabled;
+            if (securityQuestion !== undefined) updateData.securityQuestion = securityQuestion;
+            if (securityAnswer !== undefined) updateData.securityAnswer = securityAnswer;
 
             const updatedUser = await prisma.user.update({
                 where: { id: userId },
-                data: {
-                    name,
-                    twoFactorEnabled
-                },
+                data: updateData,
                 select: {
                     id: true,
                     email: true,
                     name: true,
                     role: true,
                     twoFactorEnabled: true,
+                    securityQuestion: true,
+                    securityAnswer: true,
                 },
             });
 
-            return res.status(200).json({ success: true, data: updatedUser, message: 'Profile updated successfully' });
+            const responseData = {
+                ...updatedUser,
+                hasSecurityQuestion: !!(updatedUser.securityQuestion && updatedUser.securityAnswer),
+                securityAnswer: undefined, // Never send the answer back
+            };
+
+            return res.status(200).json({ success: true, data: responseData, message: 'Profile updated successfully' });
         } catch (error) {
             logger.error({ err: error, userId: req.user?.userId }, 'Update profile error');
             return res.status(500).json({ success: false, error: 'Internal Server Error' });
@@ -165,14 +176,22 @@ export const UserController = {
                 return res.status(400).json({ success: false, error: 'Bad Request', message: 'Current and new password required' });
             }
 
-            // In a real app, verify currentPassword hash here.
-            // For now, let's just update to the new password hash (simulate bcrypt).
-            // (Assuming bcrypt.hash is used elsewhere)
-            
-            // Just for demonstration, we will "allow" it if it's not empty
+            const user = await prisma.user.findUnique({ where: { id: userId } });
+            if (!user) {
+                return res.status(404).json({ success: false, error: 'Not Found', message: 'User not found' });
+            }
+
+            // Verify current password
+            const isMatch = await import('../utils/auth.js').then(m => m.comparePassword(currentPassword, user.passwordHash));
+            if (!isMatch) {
+                return res.status(401).json({ success: false, error: 'Unauthorized', message: 'Incorrect current password' });
+            }
+
+            // Hash and save new password
+            const hashedPassword = await import('../utils/auth.js').then(m => m.hashPassword(newPassword));
             await prisma.user.update({
                 where: { id: userId },
-                data: { passwordHash: newPassword } // Simplified for now
+                data: { passwordHash: hashedPassword }
             });
 
             return res.status(200).json({ success: true, message: 'Password updated successfully' });
