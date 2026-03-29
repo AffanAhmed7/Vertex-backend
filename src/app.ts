@@ -11,6 +11,7 @@ import orderRoutes from './routes/order.js';
 import reviewRoutes from './routes/review.js';
 import addressRoutes from './routes/address.js';
 import analyticsRoutes from './routes/analytics.js';
+import settingsRoutes from './routes/settings.js';
 import { requestLogger } from './middleware/request_logger.js';
 import { errorMiddleware } from './middleware/error.middleware.js';
 import { NotFoundError } from './utils/errors.js';
@@ -71,6 +72,7 @@ export function createApp(): Express {
     app.use('/api/addresses', addressRoutes);
     app.use('/api', reviewRoutes);
     app.use('/api/admin/analytics', analyticsRoutes);
+    app.use('/api/admin/settings', settingsRoutes);
 
     // Admin aliases for convenience if needed, though they are inside the routers
     app.use('/api/admin/categories', categoryRoutes);

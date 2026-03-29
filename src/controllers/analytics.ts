@@ -4,6 +4,20 @@ import { logger } from '../utils/logger.js';
 
 export const AnalyticsController = {
     /**
+     * GET /api/admin/analytics/dashboard
+     */
+    async getDashboard(req: Request, res: Response) {
+        try {
+            const range = (req.query.range as string) || '30d';
+            const data = await AnalyticsService.getDashboardAnalytics(range);
+            return res.status(200).json({ success: true, data });
+        } catch (error) {
+            logger.error({ err: error, range: req.query.range }, 'Analytics dashboard error');
+            return res.status(500).json({ success: false, error: 'Internal Server Error' });
+        }
+    },
+
+    /**
      * GET /api/admin/analytics/overview
      */
     async getOverview(_req: Request, res: Response) {

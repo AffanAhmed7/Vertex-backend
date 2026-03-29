@@ -9,6 +9,7 @@ export const createProductSchema = z.object({
     categoryId: z.string().uuid('Invalid category ID'),
     isActive: z.boolean().default(true),
     images: z.array(z.string().url()).optional(),
+    image: z.string().optional(),
 });
 
 export const updateProductSchema = createProductSchema.partial();

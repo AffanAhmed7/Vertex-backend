@@ -26,27 +26,7 @@ async function startServer() {
     
     logger.info('Database connection successful');
 
-    // Background workers (optional)
-    // Some worker deps (e.g. native modules) may not be available in all envs.
-    // We load them dynamically so the API can still boot.
-    if (process.env.ENABLE_WORKERS !== 'false') {
-        const workerImports: Array<[name: string, path: string]> = [
-            ['email', './workers/email.worker.js'],
-            ['analytics', './workers/analytics.worker.js'],
-            ['others', './workers/others.worker.js'],
-        ];
-
-        for (const [name, path] of workerImports) {
-            try {
-                await import(path);
-                logger.info({ worker: name }, 'Worker loaded');
-            } catch (err) {
-                logger.warn({ err, worker: name }, 'Worker failed to load; continuing without it');
-            }
-        }
-    } else {
-        logger.info('Workers disabled via ENABLE_WORKERS=false');
-    }
+    logger.info('In-memory background tasks initialized');
     
     // Start server
     server.listen(PORT, HOST, () => {

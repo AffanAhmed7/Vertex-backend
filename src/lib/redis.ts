@@ -1,30 +1,18 @@
-import { Redis } from 'ioredis';
-import { config } from '../config/env.js';
 import { logger } from '../utils/logger.js';
 
-const redisUrl = config.REDIS_URL || 'redis://localhost:6379';
-
 /**
- * Global Redis connection for BullMQ and Caching
+ * DEPRECATED: Redis infrastructure has been removed in favor of In-Memory logic.
+ * This file is kept as a dummy to prevent import breaks during the transition.
  */
-export const redisConnection = new Redis(redisUrl, {
-    maxRetriesPerRequest: null, // Critical for BullMQ
-    retryStrategy: (times) => {
-        const delay = Math.min(times * 50, 2000);
-        return delay;
-    },
-});
+export const redisConnection = {
+    get: async () => null,
+    set: async () => {},
+    setex: async () => {},
+    del: async () => {},
+    on: () => {},
+    call: async () => {},
+} as any;
 
-redisConnection.on('error', (error) => {
-    if ((error as any).code === 'ECONNREFUSED') {
-        logger.error({ err: error }, '\n❌ REDIS ERROR: Connection Refused.\n👉 Is Redis running? Open a terminal and run `redis-server`\n👉 Download: https://github.com/tporadowski/redis/releases\n');
-    } else {
-        logger.error({ err: error }, 'Redis connection error');
-    }
-});
-
-redisConnection.on('connect', () => {
-    logger.info('Successfully connected to Redis');
-});
+logger.info('System operating in Zero-Redis mode (In-Memory)');
 
 export default redisConnection;

@@ -267,3 +267,23 @@ model CartItem {
   @@schema("ecommerce")
 }
 
+
+model Settings {
+  id                    String   @id @default(uuid())
+  storeName             String   @default("Vertex E-Commerce")
+  contactEmail          String   @default("admin@vertex.com")
+  supportPhone          String   @default("+1 (800) 555-0199")
+  currency              String   @default("USD")
+  stripeEnabled         Boolean  @default(true)
+  paypalEnabled         Boolean  @default(false)
+  shippingRate          Decimal  @db.Decimal(10, 2) @default(15.00)
+  freeShippingThreshold Decimal  @db.Decimal(10, 2) @default(150.00)
+  internationalShipping Boolean  @default(true)
+  orderEmails            Boolean  @default(true)
+  lowInventoryAlerts    Boolean  @default(true)
+  dailySummary          Boolean  @default(false)
+  updatedAt             DateTime @updatedAt
+
+  @@map("settings")
+  @@schema("ecommerce")
+}

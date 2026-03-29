@@ -23,8 +23,8 @@ export const imageWorker = new Worker(
 
                 // 2. Optimize with sharp
                 const optimizedBuffer = await sharp(buffer)
-                    .resize(800, 800, { fit: 'inside', withoutEnlargement: true })
-                    .jpeg({ quality: 80 })
+                    .resize(1920, 1920, { fit: 'inside', withoutEnlargement: true })
+                    .jpeg({ quality: 95, mozjpeg: true })
                     .toBuffer();
 
                 logger.info({ url, originalSize: buffer.length, optimizedSize: optimizedBuffer.length }, '[ImageWorker] Image optimized');

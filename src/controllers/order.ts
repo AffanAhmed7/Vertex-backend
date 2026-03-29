@@ -234,6 +234,7 @@ export const OrderController = {
                 customerName: o.user?.name || o.user?.email?.split('@')[0] || 'Unknown',
                 customerEmail: o.user?.email || '',
                 date: o.createdAt.toISOString(),
+                subtotal: Number(o.subtotal),
                 total: Number(o.total),
                 status: o.status === 'CREATED' ? 'Pending' :
                         o.status === 'PAID' ? 'Processing' :

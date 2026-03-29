@@ -28,12 +28,12 @@ export const resetPasswordSchema = z.object({
 });
 
 export const createOrderSchema = z.object({
-    shippingName: z.string().min(2, 'Name is required').max(100),
-    shippingPhone: z.string().min(10, 'Phone number is required').max(20),
-    shippingAddress: z.string().min(5, 'Address is required').max(255),
-    shippingCity: z.string().min(2, 'City is required').max(100),
-    shippingZip: z.string().min(4, 'ZIP code is required').max(20),
-    shippingCountry: z.string().min(2, 'Country is required').max(100).optional(),
+    shippingName: z.string().min(1, 'Name is required').max(100),
+    shippingPhone: z.string().min(5, 'Phone number is required').max(20),
+    shippingAddress: z.string().min(2, 'Address is required').max(255),
+    shippingCity: z.string().min(1, 'City is required').max(100),
+    shippingZip: z.string().min(1, 'ZIP code is required').max(20),
+    shippingCountry: z.string().min(1, 'Country is required').max(100).optional(),
 });
 
 export const updateOrderStatusSchema = z.object({

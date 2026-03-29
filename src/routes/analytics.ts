@@ -11,6 +11,7 @@ router.use(authenticate);
 router.use(authorize(Role.ADMIN));
 router.use(adminLimiter);
 
+router.get('/dashboard', AnalyticsController.getDashboard);
 router.get('/overview', AnalyticsController.getOverview);
 router.get('/sales', AnalyticsController.getSalesHistory);
 router.get('/top-products', AnalyticsController.getTopProducts);

@@ -1,6 +1,4 @@
 import { rateLimit } from 'express-rate-limit';
-import { RedisStore } from 'rate-limit-redis';
-import { redisConnection } from '../lib/redis.js';
 
 /**
  * Global Rate Limiter (Moderate)
@@ -11,11 +9,6 @@ export const globalLimiter = rateLimit({
     limit: 10000, // Effectively disabled for dev
     standardHeaders: 'draft-7',
     legacyHeaders: false,
-    store: new RedisStore({
-        // @ts-expect-error - Redis connection type mismatch in some versions of rate-limit-redis
-        sendCommand: (...args: string[]) => redisConnection.call(...args),
-        prefix: 'rl:global:',
-    }),
     message: { error: 'Too Many Requests', message: 'Please try again later' },
 });
 
@@ -28,11 +21,6 @@ export const authLimiter = rateLimit({
     limit: 1000, // Effectively disabled for dev
     standardHeaders: true,
     legacyHeaders: false,
-    store: new RedisStore({
-        // @ts-expect-error - Same as above
-        sendCommand: (...args: string[]) => redisConnection.call(...args),
-        prefix: 'rl:auth:',
-    }),
     message: { error: 'Too Many Requests', message: 'Too many authentication attempts. Please try again after 15 minutes' },
     skipSuccessfulRequests: true, // Only limit failed attempts if possible (though limit 5 is still small)
 });
@@ -46,10 +34,5 @@ export const adminLimiter = rateLimit({
     limit: 30,
     standardHeaders: true,
     legacyHeaders: false,
-    store: new RedisStore({
-        // @ts-expect-error - Same as above
-        sendCommand: (...args: string[]) => redisConnection.call(...args),
-        prefix: 'rl:admin:',
-    }),
     message: { error: 'Too Many Requests', message: 'Administrative rate limit exceeded' },
 });
