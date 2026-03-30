@@ -452,10 +452,18 @@ export const AuthController = {
                     });
                     logger.info({ userId: user.id, email }, 'Linked Google account to existing user');
                 } else {
-                    return res.status(401).json({
-                        success: false,
-                        message: 'No account found for this Google email. Please register first.'
+                    // Create a new user
+                    user = await prisma.user.create({
+                        data: {
+                            email,
+                            name: name || email.split('@')[0],
+                            passwordHash: randomBytes(32).toString('hex'), // Dummy password for Google-only users
+                            role: 'CUSTOMER',
+                            emailVerified: true,
+                            googleUid: uid,
+                        },
                     });
+                    logger.info({ userId: user.id, email }, 'Created new user via Google auth');
                 }
             }
 

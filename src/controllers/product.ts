@@ -99,10 +99,17 @@ export const ProductController = {
             const sortBy = req.query.sortBy as string | undefined;
             const minPrice = req.query.minPrice as string | undefined;
             const maxPrice = req.query.maxPrice as string | undefined;
+            const inStock = req.query.inStock === 'true';
 
             const where: any = {
                 isActive: true,
             };
+
+            if (inStock) {
+                where.stock = {
+                    gt: 0,
+                };
+            }
 
             if (category && category !== 'All') {
                 where.category = {
