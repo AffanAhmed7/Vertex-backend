@@ -1,0 +1,44 @@
+<mjml>
+  <mj-head>
+    <mj-title>Vertex Correspondence</mj-title>
+    <mj-font name="Inter" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" />
+    <mj-attributes>
+      <mj-all font-family="Inter, Helvetica, Arial, sans-serif" color="#ffffff" />
+      <mj-text font-size="14px" line-height="24px" />
+    </mj-attributes>
+    <mj-style inline="inline">
+      .brand-text { color: #00f2ff !important; font-weight: 600; }
+      .label { color: rgba(255,255,255,0.4); font-size: 10px; text-transform: uppercase; letter-spacing: 2px; font-weight: 900; margin-bottom: 4px; }
+      .value { color: #ffffff; font-size: 16px; margin-bottom: 20px; }
+      .message-box { background-color: rgba(255,255,255,0.05); border-radius: 12px; padding: 20px; border: 1px solid rgba(255,255,255,0.1); }
+    </mj-style>
+  </mj-head>
+  <mj-body background-color="#050505">
+    <mj-section padding-top="40px">
+      <mj-column>
+        <mj-text font-size="24px" font-weight="300" letter-spacing="4px" text-transform="uppercase">
+          New <span class="brand-text">Correspondence</span>
+        </mj-text>
+        <mj-divider border-width="1px" border-color="rgba(0,242,255,0.2)" padding-top="20px" padding-bottom="40px" />
+        
+        <mj-text css-class="label">Sender Identity</mj-text>
+        <mj-text css-class="value">{{name}}</mj-text>
+
+        <mj-text css-class="label">Return Address</mj-text>
+        <mj-text css-class="value">{{email}}</mj-text>
+
+        <mj-text css-class="label">Encrypted Packet</mj-text>
+        <mj-text>
+          <div class="message-box">
+            {{message}}
+          </div>
+        </mj-text>
+        
+        <mj-divider border-width="1px" border-color="rgba(255,255,255,0.05)" padding-top="40px" padding-bottom="20px" />
+        <mj-text font-size="10px" color="rgba(255,255,255,0.2)" align="center" letter-spacing="1px" text-transform="uppercase">
+          Vertex Commerce Platform • Automated Notification
+        </mj-text>
+      </mj-column>
+    </mj-section>
+  </mj-body>
+</mjml>

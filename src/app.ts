@@ -12,6 +12,7 @@ import reviewRoutes from './routes/review.js';
 import addressRoutes from './routes/address.js';
 import analyticsRoutes from './routes/analytics.js';
 import settingsRoutes from './routes/settings.js';
+import contactRoutes from './routes/contact.js';
 import { requestLogger } from './middleware/request_logger.js';
 import { errorMiddleware } from './middleware/error.middleware.js';
 import { NotFoundError } from './utils/errors.js';
@@ -32,11 +33,12 @@ export function createApp(): Express {
                 defaultSrc: ["'self'"],
                 scriptSrc: ["'self'", "'unsafe-inline'"],
                 styleSrc: ["'self'", "'unsafe-inline'"],
-                imgSrc: ["'self'", "data:", "https:"],
-                connectSrc: ["'self'", "https://*.firebaseio.com", "https://*.googleapis.com"],
+                imgSrc: ["'self'", "data:", "https:", "http://localhost:5000", "http://localhost:5173"],
+                connectSrc: ["'self'", "https://*.firebaseio.com", "https://*.googleapis.com", "http://localhost:5000"],
             },
         },
         crossOriginOpenerPolicy: false,
+        crossOriginResourcePolicy: { policy: "cross-origin" },
         xssFilter: true,
         noSniff: true,
         hidePoweredBy: true,
@@ -62,6 +64,9 @@ export function createApp(): Express {
         // Basic console logs are now handled by requestLogger
     }
 
+    // Static files
+    app.use('/uploads', express.static('uploads'));
+
     // Mount routes
     app.use(routes);
     app.use('/api/auth', authRoutes);
@@ -73,6 +78,7 @@ export function createApp(): Express {
     app.use('/api', reviewRoutes);
     app.use('/api/admin/analytics', analyticsRoutes);
     app.use('/api/admin/settings', settingsRoutes);
+    app.use('/api/contact', contactRoutes);
 
     // Admin aliases for convenience if needed, though they are inside the routers
     app.use('/api/admin/categories', categoryRoutes);

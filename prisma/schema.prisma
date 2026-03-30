@@ -39,7 +39,9 @@ model User {
   id            String   @id @default(uuid())
   email         String   @unique
   name          String?
+  avatar        String?
   passwordHash  String
+
   googleUid     String?  @unique
   role          Role     @default(CUSTOMER)
   isActive          Boolean  @default(true)

@@ -20,6 +20,8 @@ router.post('/admin/import', authenticate, authorize(Role.ADMIN), ProductControl
 router.post('/admin', authenticate, authorize(Role.ADMIN), ProductController.createProduct);
 router.put('/admin/:id', authenticate, authorize(Role.ADMIN), ProductController.updateProduct);
 router.delete('/admin/:id', authenticate, authorize(Role.ADMIN), ProductController.deleteProduct);
+router.delete('/admin/:id', authenticate, authorize(Role.ADMIN), ProductController.deleteProduct);
+router.post('/admin/cleanup', authenticate, authorize(Role.ADMIN), ProductController.cleanupProducts);
 
 /**
  * Public routes with ID

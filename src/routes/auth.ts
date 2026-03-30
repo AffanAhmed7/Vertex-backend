@@ -4,6 +4,8 @@ import { UserController } from '../controllers/user.js';
 import { authenticate, authorize } from '../middleware/auth.js';
 import { Role } from '../types/auth.js';
 import { prisma } from '../lib/prisma.js';
+import { uploadAvatar } from '../middleware/upload.js';
+
 
 const router = Router();
 
@@ -23,8 +25,9 @@ router.get('/me', authenticate, async (req, res) => {
     try {
         const user = await prisma.user.findUnique({
             where: { id: req.user!.userId },
-            select: { id: true, name: true, email: true, role: true, twoFactorEnabled: true, securityQuestion: true, securityAnswer: true },
+            select: { id: true, name: true, email: true, role: true, twoFactorEnabled: true, securityQuestion: true, securityAnswer: true, avatar: true },
         });
+
 
         if (!user) {
             return res.status(404).json({ success: false, message: 'User not found' });
@@ -46,7 +49,8 @@ router.get('/admin-only', authenticate, authorize(Role.ADMIN), (_req, res) => {
     res.json({ message: 'Welcome, Admin!', data: 'This is top secret data for admins only.' });
 });
 
-router.patch('/profile', authenticate, UserController.updateMe);
+router.patch('/profile', authenticate, uploadAvatar.single('avatar'), UserController.updateMe);
+
 router.patch('/change-password', authenticate, UserController.changePassword);
 
 export default router;

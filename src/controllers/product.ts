@@ -75,7 +75,7 @@ export const ProductController = {
                 stock: p.stock,
                 category: p.category?.name || 'Uncategorized',
                 image: p.image || '',
-                status: p.stock === 0 ? 'Out of Stock' : p.stock < 10 ? 'Low Stock' : 'In Stock',
+                status: !p.isActive ? 'Draft' : p.stock === 0 ? 'Out of Stock' : p.stock < 10 ? 'Low Stock' : 'In Stock',
                 description: p.description,
                 isActive: p.isActive,
             }));
@@ -157,9 +157,10 @@ export const ProductController = {
                     name: p.name,
                     description: p.description,
                     price: Number(p.price),
+                    image: p.image || null,
                     rating: p.avgRating,
-                    category: p.category?.name || 'Uncategorized',
-                    image: p.image,
+                    numReviews: p.numReviews,
+                    category: p.category.name,
                     images: p.images,
                     variants: p.variants,
                     specs: p.specs,
@@ -214,9 +215,10 @@ export const ProductController = {
                 name: product.name,
                 description: product.description,
                 price: Number(product.price),
+                image: product.image || null,
                 rating: product.avgRating,
-                category: product.category?.name || 'Uncategorized',
-                image: product.image,
+                numReviews: product.numReviews,
+                category: product.category.name,
                 images: product.images,
                 variants: product.variants,
                 specs: product.specs,
@@ -340,21 +342,94 @@ export const ProductController = {
     async deleteProduct(req: Request, res: Response) {
         try {
             const { id } = req.params;
+            const productId = String(id);
 
-            const product = await prisma.product.findUnique({ where: { id: String(id) } });
+            const product = await prisma.product.findUnique({ 
+                where: { id: productId },
+                include: { 
+                    orderItems: { take: 1 },
+                    cartItems: { take: 1 },
+                    reviews: { take: 1 }
+                }
+            });
+
             if (!product) {
                 return res.status(404).json({ success: false, error: 'Not Found', message: 'Product not found' });
             }
 
-            const deletedProduct = await prisma.product.delete({ where: { id: String(id) } });
+            // SOFT DELETE: If product has order history, just deactivate it
+            if (product.orderItems.length > 0) {
+                await prisma.product.update({
+                    where: { id: productId },
+                    data: { isActive: false }
+                });
+                
+                await createAuditLog(req.user!.userId, 'UPDATE', 'PRODUCT', 'SOFT_DELETE', { productId, message: 'Deactivated due to order history' });
+                
+                return res.status(200).json({ 
+                    success: true, 
+                    message: 'Product contains order history. It has been deactivated (Soft Delete) to preserve records.' 
+                });
+            }
+
+            // HARD DELETE: If no orders, purge completely
+            // 1. Delete dependent non-critical data first
+            await prisma.$transaction([
+                prisma.cartItem.deleteMany({ where: { productId } }),
+                prisma.review.deleteMany({ where: { productId } }),
+                prisma.product.delete({ where: { id: productId } })
+            ]);
 
             // Audit Log
-            await createAuditLog(req.user!.userId, 'DELETE', 'PRODUCT', id as string, { name: deletedProduct.name, sku: deletedProduct.sku });
+            await createAuditLog(req.user!.userId, 'DELETE', 'PRODUCT', productId);
 
             return res.status(200).json({ success: true, message: 'Product deleted successfully' });
         } catch (error) {
             logger.error({ err: error, productId: req.params?.id }, 'Delete product error');
             return res.status(500).json({ success: false, error: 'Internal Server Error', message: 'Failed to delete product' });
+        }
+    },
+
+    /**
+     * Cleanup products without descriptions (Admin)
+     */
+    async cleanupProducts(req: Request, res: Response) {
+        try {
+            const productsToDelete = await prisma.product.findMany({
+                where: {
+                    OR: [
+                        { description: { equals: '' } },
+                        { description: null }
+                    ]
+                },
+                select: { id: true }
+            });
+
+            let deletedCount = 0;
+            let errorCount = 0;
+
+            for (const p of productsToDelete) {
+                try {
+                    await prisma.product.delete({ where: { id: p.id } });
+                    deletedCount++;
+                } catch (e) {
+                    errorCount++;
+                    logger.warn({ productId: p.id, err: e }, 'Failed to delete individual product during cleanup');
+                }
+            }
+
+            // Audit Log (if user is authenticated)
+            if (req.user && deletedCount > 0) {
+                await createAuditLog(req.user.userId, 'DELETE', 'PRODUCT', 'BATCH_CLEANUP', { count: deletedCount });
+            }
+
+            return res.status(200).json({ 
+                success: true, 
+                message: `Successfully removed ${deletedCount} products. ${errorCount} products could not be removed due to existing relations.` 
+            });
+        } catch (error) {
+            logger.error({ err: error }, 'Cleanup products error');
+            return res.status(500).json({ success: false, error: 'Internal Server Error', message: (error as Error).message });
         }
     },
 };

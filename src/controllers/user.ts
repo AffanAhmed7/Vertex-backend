@@ -1,4 +1,6 @@
 import { Request, Response } from 'express';
+import path from 'path';
+import fs from 'fs';
 import { prisma } from '../lib/prisma.js';
 import { createAuditLog } from '../lib/audit.js';
 import { logger } from '../utils/logger.js';
@@ -66,6 +68,12 @@ export const UserController = {
                 return res.status(400).json({ success: false, error: 'Bad Request', message: 'isActive must be a boolean' });
             }
 
+            // PROTECT APEX ADMIN
+            const targetUser = await prisma.user.findUnique({ where: { id: userId } });
+            if (targetUser?.email === 'admin1234@gmail.com') {
+                return res.status(403).json({ success: false, error: 'Forbidden', message: 'Apex Admin status cannot be modified' });
+            }
+
             const user = await prisma.user.update({
                 where: { id: userId },
                 data: { isActive },
@@ -101,6 +109,12 @@ export const UserController = {
                 return res.status(400).json({ success: false, error: 'Bad Request', message: 'Invalid role' });
             }
 
+            // PROTECT APEX ADMIN
+            const targetUser = await prisma.user.findUnique({ where: { id: userId } });
+            if (targetUser?.email === 'admin1234@gmail.com') {
+                return res.status(403).json({ success: false, error: 'Forbidden', message: 'Apex Admin role cannot be modified' });
+            }
+
             const user = await prisma.user.update({
                 where: { id: userId },
                 data: { role: role as any },
@@ -123,16 +137,44 @@ export const UserController = {
     async updateMe(req: Request, res: Response) {
         try {
             const userId = req.user!.userId;
-            const result = updateProfileSchema.safeParse(req.body);
+            const bodyData = { ...req.body };
+            // Standardise 2FA toggle as booleans if sent via multipart/form-data (strings)
+            if (bodyData.twoFactorEnabled === 'true') bodyData.twoFactorEnabled = true;
+            if (bodyData.twoFactorEnabled === 'false') bodyData.twoFactorEnabled = false;
+
+            const result = updateProfileSchema.safeParse(bodyData);
 
             if (!result.success) {
+                logger.warn({ details: result.error.format(), userId }, 'Profile validation failed');
                 return res.status(400).json({ success: false, error: 'Validation Error', details: result.error.format() });
             }
 
-            const { name, twoFactorEnabled, securityQuestion, securityAnswer } = result.data as any;
-
+            const { name, avatar, twoFactorEnabled, securityQuestion, securityAnswer } = result.data as any;
+            
             const updateData: any = {};
             if (name !== undefined) updateData.name = name;
+            
+            // Handle file upload vs manual string update
+            if (req.file) {
+                // If there's an old avatar, delete it
+                const user = await prisma.user.findUnique({ where: { id: userId }, select: { avatar: true } });
+                if (user?.avatar && user.avatar.startsWith('/uploads/avatars/')) {
+                    const oldPath = path.join(process.cwd(), user.avatar);
+                    if (fs.existsSync(oldPath)) fs.unlinkSync(oldPath);
+                }
+                updateData.avatar = `/uploads/avatars/${req.file.filename}`;
+            } else if (avatar === null) {
+                // Remove avatar
+                const user = await prisma.user.findUnique({ where: { id: userId }, select: { avatar: true } });
+                if (user?.avatar && user.avatar.startsWith('/uploads/avatars/')) {
+                    const oldPath = path.join(process.cwd(), user.avatar);
+                    if (fs.existsSync(oldPath)) fs.unlinkSync(oldPath);
+                }
+                updateData.avatar = null;
+            } else if (avatar !== undefined) {
+                updateData.avatar = avatar;
+            }
+
             if (twoFactorEnabled !== undefined) updateData.twoFactorEnabled = twoFactorEnabled;
             if (securityQuestion !== undefined) updateData.securityQuestion = securityQuestion;
             if (securityAnswer !== undefined) updateData.securityAnswer = securityAnswer;
@@ -148,8 +190,10 @@ export const UserController = {
                     twoFactorEnabled: true,
                     securityQuestion: true,
                     securityAnswer: true,
+                    avatar: true,
                 },
             });
+
 
             const responseData = {
                 ...updatedUser,
