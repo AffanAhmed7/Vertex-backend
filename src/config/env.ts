@@ -9,7 +9,7 @@ const envSchema = z.object({
         .enum(['development', 'production', 'test'])
         .default('development'),
     PORT: z.coerce.number().positive().default(5000),
-    HOST: z.string().default('localhost'),
+    HOST: z.string().default('0.0.0.0'),
 
     // Database
     DATABASE_URL: z.string().min(1, 'DATABASE_URL is required'),
