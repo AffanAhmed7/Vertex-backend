@@ -1,10 +1,10 @@
-# Vertex E-Commerce Backend ⚡
+# Vertex E-Commerce Backend 
 
 **Frontend Repository:** [Vertex-frontend](https://github.com/AffanAhmed7/Vertex-frontend)
 
 This repository contains the backend infrastructure for the Vertex E-Commerce Platform. It is a production-grade, highly scalable API built with Node.js, Express, and TypeScript, utilizing a PostgreSQL database managed by Prisma ORM.
 
-## ✨ Key Features
+##  Key Features
 - **Robust Authentication & MFA:** JWT-based authentication, Role-Based Access Control (RBAC), and Two-Factor Authentication (2FA).
 - **Asynchronous Task Queues:** Redis-backed BullMQ queues to offload heavy operations like sending transactional emails and processing images.
 - **Real-Time Communication:** Socket.io integration for instant push notifications (e.g., order status updates).
@@ -13,7 +13,7 @@ This repository contains the backend infrastructure for the Vertex E-Commerce Pl
 - **Image Optimization:** On-the-fly image processing using Multer and Sharp.
 - **Structured Logging:** High-performance JSON logging via Pino and Pino-HTTP.
 
-## 🛠️ Technical Stack
+##  Technical Stack
 - **Core:** Node.js, Express.js, TypeScript
 - **Database & ORM:** PostgreSQL, Prisma ORM (@prisma/adapter-pg)
 - **Queues & Caching:** Redis (ioredis), BullMQ
@@ -24,7 +24,7 @@ This repository contains the backend infrastructure for the Vertex E-Commerce Pl
 - **Email:** Nodemailer, Handlebars, MJML
 - **Logging:** Pino, Pino-HTTP
 
-## 🚀 Getting Started Locally
+##  Getting Started Locally
 
 ### Prerequisites
 - Node.js (v20+)
@@ -68,7 +68,7 @@ Start the development server with Hot Module Reloading (HMR):
 npm run dev
 ```
 
-## 📜 Scripts
+##  Scripts
 - `npm run dev` - Run the API in development mode
 - `npm run build` - Compile TypeScript to JavaScript
 - `npm start` - Run the compiled production build
