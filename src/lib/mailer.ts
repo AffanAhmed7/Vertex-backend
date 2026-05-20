@@ -32,7 +32,7 @@ export const Mailer = {
             const mjmlWithData = template(context);
 
             // 2. Convert MJML to HTML
-            const { html, errors } = mjml2html(mjmlWithData);
+            const { html, errors } = await mjml2html(mjmlWithData);
 
             if (errors && errors.length > 0) {
                 logger.warn({ errors, template: mjmlTemplate.substring(0, 100) }, 'MJML Compilation Warnings');
